@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class SpellParentScript : MonoBehaviour {
 
 	public SpellcastStats stats;
+	public GameObject myWand;
 
 	//COPY TO CHILDREN
 //	void Start () {

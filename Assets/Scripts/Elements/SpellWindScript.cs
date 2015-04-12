@@ -6,10 +6,8 @@ public class SpellWindScript : SpellParentScript {
 
 	public List<GameObject> enemiesDamaged = new List<GameObject>();
 	public List<GameObject> enemiesInZone = new List<GameObject>();
-	public GameObject currentPlayer;
 
 	void Start () {
-		currentPlayer = GameObject.FindWithTag("Player");
 		Invoke ("Die", stats.duration); //Invoke the die function after however many seconds the duration stat is
 		this.GetComponent<SpriteRenderer> ().color = Color.white; //Change the color of the spell to blue. DEFAULT
 	}
@@ -36,7 +34,7 @@ public class SpellWindScript : SpellParentScript {
 	void Update()
 	{
 		foreach (GameObject enemy in enemiesInZone) {
-			Vector2 direction = this.transform.position - currentPlayer.transform.position;
+			Vector2 direction = this.transform.position - myWand.transform.position;
 			direction = Vector2.ClampMagnitude(direction, 1f);
             enemy.rigidbody2D.AddForce(direction * 5f);
 				}

@@ -19,15 +19,13 @@ public class SpellcastScript : MonoBehaviour {
 	};
 	
 	public int selectedSpell = 0;
+
+
 	
 	void Start () {
-		myCombos [0] = new SpellCombo ();
 		myCombos [0].InitializeValues (0, 0);
-		myCombos [1] = new SpellCombo ();
 		myCombos [1].InitializeValues (2, 1);
-		myCombos [2] = new SpellCombo ();
 		myCombos [2].InitializeValues (1, 2);
-		myCombos [3] = new SpellCombo ();
 		myCombos [3].InitializeValues (0, 4);
 		
 		stats = new SpellcastStats ();
@@ -71,6 +69,8 @@ public class SpellcastScript : MonoBehaviour {
 			mySpell.rigidbody2D.AddForce (direction * 100f); //Add the force in the direction calculated times the shotspeed stat
 			mySpell.GetComponent<SpellShotScript> ().stats = stats.ReturnCopy ();
 			mySpell.GetComponent<SpellShotScript> ().myCombo = myCombos [selectedSpell];
+			mySpell.GetComponent<SpellShotScript> ().myWand = this.gameObject;
+			mySpell.GetComponent<SpellShotScript> ().rotationAtFire = this.transform.rotation;
 		}
 		
 		

@@ -6,11 +6,13 @@ public class SpellShotScript : MonoBehaviour {
 	
 	public SpellcastStats stats; //Handle to the player's spellcast script to access its variables
 	public SpellCombo myCombo;
+	public GameObject myWand;
+	public Quaternion rotationAtFire;
 
 	//Prefab for the specific rune shape selected
 	public GameObject circleShape; //Prefab of a circle
 	public GameObject lineShape; //Prefab of a line
-	public GameObject spotShape; //prefab of the beam
+	public GameObject clusterShape; //prefab of a cluster shot
 
 	void Awake()
 	{
@@ -29,13 +31,13 @@ public class SpellShotScript : MonoBehaviour {
 								mySpell.Add ((GameObject)Instantiate (circleShape, other.transform.position, other.transform.rotation));
 								break;
 						case 1: //If line
-								//Instantiate a line prefab at the position of the enemy and zero rotation
-								mySpell.Add ((GameObject)Instantiate (lineShape, other.transform.position, new Quaternion (0f, 0f, 0f, 0f)));
+								//Instantiate a line prefab at the position of the enemy and player rotation
+								mySpell.Add ((GameObject)Instantiate (lineShape, other.transform.position, rotationAtFire));
 								break;
-						case 2: //If spot
+						case 2: //If cluster
 								for (int ii = 0; ii < 4; ii++) {
 										Vector3 rand = new Vector3 (Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f));
-										mySpell.Add ((GameObject)Instantiate (spotShape, other.transform.position + rand, other.transform.rotation));
+										mySpell.Add ((GameObject)Instantiate (clusterShape, other.transform.position + rand, other.transform.rotation));
 								}
 								break;
 						}
@@ -84,6 +86,7 @@ public class SpellShotScript : MonoBehaviour {
 								//Use inheritance to initialize the stat values of damage and duration on the spell script assigned to the spell.
 								//All spell scripts inherit from SpellParentScript and inherit the InitializeValues function, so polymorphism works here.
 								spell.GetComponent<SpellParentScript> ().stats = stats.ReturnCopy ();
+								spell.GetComponent<SpellParentScript> ().myWand = myWand;
 						}
 
 						//Destroy the spell shot object
