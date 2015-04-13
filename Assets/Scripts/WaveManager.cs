@@ -5,6 +5,9 @@ public class WaveManager : MonoBehaviour {
 
     public static int enemiesAlive;
 
+    public int enemyDebug;
+    public int waveDebug;
+
 
     public GameObject[] SpawnPoints; //An array that holds all the potential Spawn Points
 
@@ -22,16 +25,21 @@ public class WaveManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (enemiesAlive == 0)
+        enemyDebug = enemiesAlive; //enemyDebug is a version of the enemiesAlive variable which shows up in the
+                                   //console window
+
+        if (enemiesAlive <= 0)
         {
            
-            enemies = Random.Range(1, 4);// Decide how many enemies to spawn
+            enemies = Random.Range(2, 6);// Decide how many enemies to spawn
+
+            waveDebug = enemies; //waveDebug shows the number of enemies that SHOULD be spawning in this wave
 
             //Spawn that many enemies
             for (int i = 0; i < enemies; i++)
             {
                 number = Random.Range(0, 3);
-                SpawnPoints[number].gameObject.GetComponent<EnemySpawn>().Spawn(this.gameObject);
+                SpawnPoints[number].GetComponent<EnemySpawn>().Spawn(this.gameObject);
             }
 
             

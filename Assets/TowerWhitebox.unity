@@ -1116,6 +1116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ed9f0cac28aaa4b8cc7b5f4d6e769e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDebug: 0
+  waveDebug: 0
   SpawnPoints:
   - {fileID: 689344361}
   - {fileID: 184197738}

@@ -13,6 +13,8 @@ public class EnemySpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        
+
         //Debug Purposes- X key spawns enemies
        // if (Input.GetKeyDown("x"))
         //{
@@ -22,11 +24,22 @@ public class EnemySpawn : MonoBehaviour {
 	}
 
     //Function that spawns gameobject
-    public void Spawn(GameObject player)
+    public void Spawn(GameObject _player)
     {
+
+        print("1");
+        Invoke("UpEnemyCount", .05f);
+
         GameObject Enemy = (GameObject)Instantiate(baddie, transform.position, transform.rotation); //Spawns enemy
-        Enemy.gameObject.GetComponent<EnemyApproach>().player = player;
+        print("2");
+        Enemy.GetComponent<EnemyApproach>().player = _player;
+        print("3");
+        print("4");
         
-        WaveManager.enemiesAlive++; //Tracks an additional living enemy
     }
+
+    public void UpEnemyCount()
+{
+    WaveManager.enemiesAlive++; //Tracks an additional living enemy
+}
 }

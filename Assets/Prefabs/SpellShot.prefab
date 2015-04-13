@@ -68,11 +68,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffab639db343c0544928810807f30cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  myCombo: {fileID: 0}
+  myWand: {fileID: 0}
+  rotationAtFire: {x: 0, y: 0, z: 0, w: 0}
   circleShape: {fileID: 100000, guid: 8428c34d48d70964f9026004c1458b51, type: 2}
   lineShape: {fileID: 100000, guid: 5416c5af247300449b556164e3c0e261, type: 2}
-  spotShape: {fileID: 100000, guid: 4affba68ca4565b4c8681966114370a1, type: 2}
+  clusterShape: {fileID: 100000, guid: 4affba68ca4565b4c8681966114370a1, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -93,7 +93,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 92a161861d8541447a07e5a234ef4e10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1d39a7b2bb459ea40800626bc0993658, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

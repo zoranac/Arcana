@@ -318,6 +318,8 @@ Prefab:
     - {fileID: 11400000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
     - {fileID: 5000000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
     - {fileID: 6100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
+    - {fileID: 11400002, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
+    - {fileID: 11400004, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
   m_RootGameObject: {fileID: 1987592370}
   m_IsPrefabParent: 0
@@ -973,9 +975,9 @@ Rigidbody2D:
   m_GameObject: {fileID: 1387003266}
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0
   m_GravityScale: 0
-  m_FixedAngle: 1
+  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1400,7 +1402,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1987592371}
   - 212: {fileID: 1987592372}
-  - 114: {fileID: 1987592373}
   m_Layer: 8
   m_Name: Stick
   m_TagString: Enemy
@@ -1440,23 +1441,9 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b556910fe653fcc45931361e22279513, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 0b2099e3038ee8f4aa1d6cdd71d1be31, type: 3}
   m_Color: {r: .220588207, g: .187611848, b: .0032439474, a: 1}
---- !u!114 &1987592373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: cd9ff01204cf8b94583214c38242ac5c,
-    type: 2}
-  m_PrefabInternal: {fileID: 579059921}
-  m_GameObject: {fileID: 1987592370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fcf1ad2c27d9cf41aa29d263697c0b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  speed: 2
 --- !u!1 &2046664888
 GameObject:
   m_ObjectHideFlags: 0
