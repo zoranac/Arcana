@@ -24,7 +24,7 @@ public class SpellParentScript : MonoBehaviour {
 //		}
 //	}
 
-	void Die()
+	protected virtual void Die()
 	{
 		Destroy (this.gameObject); //Destroy the spell object
 	}

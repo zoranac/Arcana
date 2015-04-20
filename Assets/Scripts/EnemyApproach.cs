@@ -17,6 +17,5 @@ public class EnemyApproach : MonoBehaviour {
 
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position, step);
-	
 	}
 }

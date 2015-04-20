@@ -52,21 +52,22 @@ public class SpellcastScript : MonoBehaviour {
 		float deadzone = 0.25f;
 		Vector2 stickInput = new Vector2(inputDevice.RightStickX, inputDevice.RightStickY);
 		if (stickInput.magnitude < deadzone) {
-			stickInput = Vector2.zero;
 			aiming = false;
 		} else {
 			stickInput = stickInput.normalized * ((stickInput.magnitude - deadzone) / (1 - deadzone));
 			aiming = true;
 		}
-		
-		float newRotation = Mathf.Atan2 (stickInput.y, stickInput.x) * Mathf.Rad2Deg; //Calculate the new angle to rotate to
-		this.transform.Rotate (0f, 0f, newRotation - this.transform.eulerAngles.z + 90f); //Rotate
+
+		if (aiming) {
+						float newRotation = Mathf.Atan2 (stickInput.y, stickInput.x) * Mathf.Rad2Deg; //Calculate the new angle to rotate to
+						this.transform.Rotate (0f, 0f, newRotation - this.transform.eulerAngles.z + 90f); //Rotate
+				}
 		
 		if (aiming && shotCool <= 0f) { //If the shot has cooled down and the player is aiming
 			shotCool += 100f - (stats.frequency * 10f); //Add a value to the cooldown variable equal to the frequency stat times a flat multiplier
 			GameObject mySpell = (GameObject)Instantiate (spell, origin.position, origin.rotation); //Instantiate a spell
 			Vector2 direction = origin.position - this.transform.position; //Calculate a vector2 of direction based on player position and wand position
-			mySpell.rigidbody2D.AddForce (direction * 100f); //Add the force in the direction calculated times the shotspeed stat
+			mySpell.rigidbody2D.AddForce (direction * 600f); //Add the force in the direction calculated times the shotspeed stat
 			mySpell.GetComponent<SpellShotScript> ().stats = stats.ReturnCopy ();
 			mySpell.GetComponent<SpellShotScript> ().myCombo = myCombos [selectedSpell];
 			mySpell.GetComponent<SpellShotScript> ().myWand = this.gameObject;

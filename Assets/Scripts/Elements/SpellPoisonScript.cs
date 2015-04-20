@@ -11,7 +11,7 @@ public class SpellPoisonScript : SpellParentScript {
 	void Start () {
 		Invoke ("Expire", stats.duration);
 		Invoke ("Die", stats.duration * 2f); //Invoke the die function after however many seconds the duration stat is
-		this.GetComponent<SpriteRenderer> ().color = Color.green; //Change the color of the spell to blue. DEFAULT
+		this.GetComponent<SpriteRenderer> ().color = Color.magenta; //Change the color of the spell to blue. DEFAULT
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)
@@ -34,7 +34,9 @@ public class SpellPoisonScript : SpellParentScript {
 	void Expire()
 	{
 		modifier = 2f;
-		this.GetComponent<SpriteRenderer> ().color = new Color (0f, .2f, 0f);
+		Color oldColor = this.GetComponent<SpriteRenderer> ().color;
+		Color newColor = new Color (oldColor.r * 0.5f, oldColor.g * 0.5f, oldColor.b * 0.5f);
+		this.GetComponent<SpriteRenderer> ().color = newColor;
 		enemiesDamaged.Clear ();
 	}
 }

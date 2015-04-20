@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GUIButton : MonoBehaviour {
+public class GUIButton{
 	public string controlName;
 	public string text;
 	public Rect rect;
 
-	public void SetValues(string _controlName, string _text)
+	public GUIButton(string _controlName, string _text)
 	{
 		controlName = _controlName;
 		text = _text;

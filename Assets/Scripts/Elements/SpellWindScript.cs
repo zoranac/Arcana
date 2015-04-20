@@ -36,7 +36,7 @@ public class SpellWindScript : SpellParentScript {
 		foreach (GameObject enemy in enemiesInZone) {
 			Vector2 direction = this.transform.position - myWand.transform.position;
 			direction = Vector2.ClampMagnitude(direction, 1f);
-            enemy.rigidbody2D.AddForce(direction * 5f);
+            enemy.rigidbody2D.AddForce(direction * 10f);
 				}
 	}
 }

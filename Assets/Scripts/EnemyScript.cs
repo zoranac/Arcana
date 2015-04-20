@@ -22,6 +22,9 @@ public class EnemyScript : MonoBehaviour {
 	public GameObject target;
 
 	bool stuck = false;
+	public float speedMax = .025f; //ADDED
+	public float speedMin = .001f; //ADDED
+	public bool slowed = false; //ADDED
 	float speed = .02f;
 	enum State
 	{
@@ -38,7 +41,7 @@ public class EnemyScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () { //CHANGED
 		speed = Random.Range(.01f,.03f);
 		playerInSightRange = false;
 		playerInAttackRange = false;
@@ -51,7 +54,7 @@ public class EnemyScript : MonoBehaviour {
 			{
 				playerInSightRange = true;
 				target = obj.gameObject;
-				speed = Random.Range((obj.transform.position - transform.position).magnitude*.001f,(obj.transform.position - transform.position).magnitude*.025f);
+				speed = Random.Range((obj.transform.position - transform.position).magnitude*speedMin,(obj.transform.position - transform.position).magnitude*speedMax); //CHANGED
 			}
 		}
 		foreach (Collider2D obj in Physics2D.OverlapCircleAll(transform.position,AttackRange))

@@ -9,7 +9,7 @@ public class SpellEarthScript : SpellParentScript {
 
 	void Start () {
 		Invoke ("Die", stats.duration); //Invoke the die function after however many seconds the duration stat is
-		this.GetComponent<SpriteRenderer> ().color = Color.white; //Change the color of the spell to blue. DEFAULT
+		this.GetComponent<SpriteRenderer> ().color = Color.green; //Change the color of the spell to blue. DEFAULT
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)
@@ -21,6 +21,9 @@ public class SpellEarthScript : SpellParentScript {
 				enemiesDamaged.Add(other.gameObject); //If not, add it to the list of damaged enemies so none get hit multiple times
 				other.gameObject.GetComponent<HealthScript>().Decriment(stats.damage / 2f); //Deal the flat damage stat 
 			}
+			Vector2 direction =  other.gameObject.transform.position - this.transform.position;
+			direction = Vector2.ClampMagnitude(direction, 1f);
+			other.gameObject.rigidbody2D.AddForce(direction * 1000f);
 		}
 	}
 	
@@ -34,9 +37,7 @@ public class SpellEarthScript : SpellParentScript {
 	void Update()
 	{
 		foreach (GameObject enemy in enemiesInZone) {
-			Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-			direction = Vector2.ClampMagnitude(direction, 1f);
-            enemy.rigidbody2D.AddForce(direction * 5f);
+
 		}
 	}
 }

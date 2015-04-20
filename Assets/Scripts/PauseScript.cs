@@ -5,180 +5,208 @@ using InControl;
 public class PauseScript : MonoBehaviour {
 
 	public SpellcastScript myCaster;
+	public bool[] unlockedShapes = new bool[3];
+	public bool[] unlockedElements = new bool[6];
 
-	bool[] collectedShapes; //The shapes the player has access to
-	bool[] collectedElements; //The elements the player has access to
-	//The list of buttons for each menu
-	GUIButton[][] bMenus = new GUIButton[5][]
+	private bool paused;
+	private GUIButton[][] menus = new GUIButton[5][];
+	private int menuState;
+	private int index;
+	private string headerText;
+	private Rect headerRect;
+	private int oldComboIndex;
+	private int newComboShape;
+	private int newComboElement;
+	private SpellCombo newCombo;
+
+	void Start()
 	{
-		new GUIButton[3], //Selecting to resume quit or replace spells
-		new GUIButton[5], //Selecting what combo to replace
-		new GUIButton[4], //Selecting what shape
-		new GUIButton[7], //Selecting what element
-		new GUIButton[2]  //Confirming the selection
-	};
-
-	bool paused;
-	int menuPoint; //Where is the player in the menu, used to select which buttons to display
-	int current; //What button the player has selected
-	int newComboIndex; //What combo to replace with the new one
-	int newShape; //What shape to build a new combo out of
-	int newElement; //What element to build a new combo out of
-	SpellCombo newCombo; //New combo
-
-
-
-	// Use this for initialization
-	void Awake () {
 		paused = false;
-		menuPoint = 0;
-		current = 0;
-		newCombo = new SpellCombo();
 
-		InitializeButtons ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		InputDevice inputDevice = InputManager.ActiveDevice;
+		menus[0] = new GUIButton[3];
+		menus [0] [0] = new GUIButton ("mainResume", "Resume");
+		menus [0] [1] = new GUIButton ("mainSpellbook", "Spellbook");
+		menus [0] [2] = new GUIButton ("mainQuit", "Quit");
+		menus[1] = new GUIButton[5];
+		menus [1] [0] = new GUIButton ("combo0", string.Empty);
+		menus [1] [1] = new GUIButton ("combo1", string.Empty);
+		menus [1] [2] = new GUIButton ("combo2", string.Empty);
+		menus [1] [3] = new GUIButton ("combo3", string.Empty);
+		menus [1] [4] = new GUIButton ("comboBack", "Back");
+		menus[2] = new GUIButton[4];
+		menus [2] [0] = new GUIButton ("shape0", "Circle");
+		menus [2] [1] = new GUIButton ("shape1", "Line");
+		menus [2] [2] = new GUIButton ("shape2", "Cluster");
+		menus [2] [3] = new GUIButton ("shapeBack", "Back");
+		menus[3] = new GUIButton[7];
+		menus [3] [0] = new GUIButton ("element0", "Fire");
+		menus [3] [1] = new GUIButton ("element1", "Spark");
+		menus [3] [2] = new GUIButton ("element2", "Ice");
+		menus [3] [3] = new GUIButton ("element3", "Poison");
+		menus [3] [4] = new GUIButton ("element4", "Wind");
+		menus [3] [5] = new GUIButton ("element5", "Earth");
+		menus [3] [6] = new GUIButton ("elementBack", "Back");
+		menus[4] = new GUIButton[2];
+		menus [4] [0] = new GUIButton ("confirmYes", "Confirm");
+		menus [4] [1] = new GUIButton ("confirmBack", "Back");
 
-		if (inputDevice.MenuWasPressed) { //Pause the game on start button
-				paused = !paused;
-				Time.timeScale = paused ? 0.0f : 1.0f;
-		}
+		menuState = 0;
+		index = 0;
 
-		if (paused) {
-			//Use dpad to navigate the menu
-			if (inputDevice.DPadDown.WasPressed) {
-					current++;
-			} else if (inputDevice.DPadUp.WasPressed) {
-					current--;
-			}
-			current = Mathf.Clamp (current, 0, bMenus [menuPoint].Length - 1); //Clamp the current variable to stay an index for the menu buttons
+		headerText = "Paused";
+		headerRect = new Rect (500f, 100f, 200f, 40f);
 
-			if (inputDevice.Action1.WasPressed) {
-				//Activate what button was pressed
-				switch (menuPoint) { //find what menu the player is in, and in each menu find out what button is selected
-				case 0:
-					switch (current) {
-					case 0: //resume
-						paused = !paused; //Unpause the game
-						Time.timeScale = paused ? 0.0f : 1.0f;
-						break;
-					case 1: //spellbook
-						menuPoint = 1; //Navigate to spellbook menu
-						current = 0;
-						break;
-					case 2: //quit
-						Application.Quit (); //quit the game
-						break;
-					}
-					break;
-				case 1:
-					if (current == bMenus [menuPoint].Length - 1) { //Back
-							menuPoint = 0; //return to main
-					} else { //Selecting a combo
-							newComboIndex = current; //Get the index of the combo to replace
-							menuPoint = 2;
-					}
-					current = 0; //Reset selected button
-					break;
-				case 2:
-					if (current == bMenus [menuPoint].Length - 1) { //Back
-							menuPoint = 1; //return to combo selection
-					} else { //Selecting a shape
-							newShape = current; //Get the index of the new shape
-							menuPoint = 3;
-					}
-					current = 0; //Reset selected button
-					break;
-				case 3:
-					if (current == bMenus [menuPoint].Length - 1) { //Back
-							menuPoint = 2; //return to shape selection
-					} else { //Selecting an element
-							newElement = current; //Get the index of the new element
-							menuPoint = 4;
-					}
-					current = 0; //Reset selected button
-					break;
-				case 4:
-					if (current == bMenus [menuPoint].Length - 1) { //Back
-						menuPoint = 3; //return to element selection
-					} else { //confirming replacement
-						myCaster.myCombos[newComboIndex] = newCombo;
-						menuPoint = 0;
-					}
-					current = 0; //Reset selected button
-					break;
-				}
-			}
-		}
-	}
-	
+		oldComboIndex = 0;
+		newComboShape = 0;
+		newComboElement = 0;
+		newCombo = new SpellCombo ();
 
-	void OnGUI()
-	{
-		if (paused) { //Check if paused
-			for (int ii = 0; ii < bMenus[menuPoint].Length; ii++) { //Cycle through whatever menu the player is on
-				
-				//Fills in the names for the combos if on the combo menu
-				if (menuPoint == 1 && ii < bMenus[menuPoint].Length - 1) {
-					bMenus[menuPoint][ii].text = myCaster.myCombos[ii].shape + " " + myCaster.myCombos[ii].element;
-				//Sets buttons for collected shapes active and non collected shapes inactive
-				} else if (menuPoint == 2 && ii < bMenus[menuPoint].Length - 1) {
-					GUI.enabled = collectedShapes [ii];
-				} else if (menuPoint == 3 && ii < bMenus[menuPoint].Length - 1) {
-					GUI.enabled = collectedElements [ii];
-				//Sets the text field to the combo the player has just built
-				} else if (menuPoint == 4 && ii < bMenus[menuPoint].Length - 1) {
-					newCombo.InitializeValues(newShape, newElement);
-					bMenus[menuPoint][ii].text = newCombo.shape + " " + newCombo.element;
-				}
-				
-				GUI.SetNextControlName (bMenus [menuPoint] [ii].controlName);
-				GUI.Button (bMenus [menuPoint] [ii].rect, bMenus [menuPoint] [ii].text);
-				
-				GUI.enabled = true; //Re enable the gui no matter what after drawing a button
-			}
-			GUI.FocusControl(bMenus[menuPoint][current].controlName);
-		}
-	}
-
-	#region Initialize Buttons
-	void InitializeButtons()
-	{
-		//Fields marked as empty must be set in ongui
-		bMenus [0] [0].SetValues ("unpause", "Resume");
-		bMenus [0] [1].SetValues ("changespell", "Spellbook");
-		bMenus [0] [2].SetValues ("endgame", "Quit");
-
-		bMenus [1] [0].SetValues ("combo1", string.Empty);
-		bMenus [1] [1].SetValues ("combo2", string.Empty);
-		bMenus [1] [2].SetValues ("combo3", string.Empty);
-		bMenus [1] [3].SetValues ("combo4", string.Empty);
-		bMenus [1] [4].SetValues ("comboback", "Back");
-		
-		bMenus [2] [0].SetValues ("shape1", "Circle");
-		bMenus [2] [1].SetValues ("shape2", "Line");
-		bMenus [2] [2].SetValues ("shape3", "Cluster");
-		bMenus [2] [3].SetValues ("shapeback", "Back");
-		
-		bMenus [3] [0].SetValues ("element1", "Fire");
-		bMenus [3] [1].SetValues ("element2", "Spark");
-		bMenus [3] [2].SetValues ("element3", "Ice");
-		bMenus [3] [3].SetValues ("element4", "Poison");
-		bMenus [3] [4].SetValues ("element5", "Wind");
-		bMenus [3] [5].SetValues ("element6", "Earth");
-		bMenus [3] [6].SetValues ("elementback", "Back");
-
-		bMenus [4] [0].SetValues ("selectionyes", string.Empty);
-		bMenus [4] [1].SetValues ("selectionback", "Back");
-
-		for (int ii = 0; ii < bMenus.Length; ii++) {
-						for (int jj = 0; jj < bMenus[ii].Length; jj++) {
-								bMenus [ii] [jj].SetRect (new Rect (10f, (20f * (float)jj) + 10f, 100f, 20f));
+		for (int ii = 0; ii < menus.Length; ii++) {
+						for (int jj = 0; jj < menus[ii].Length; jj++) {
+								menus [ii] [jj].SetRect (new Rect (500f, 140f + ((float)jj * 20f), 100f, 20f));
 						}
 				}
 	}
-	#endregion
+
+	void OnGUI()
+	{
+		if (paused) {
+						GUI.Label (headerRect, headerText);
+
+						for (int ii = 0; ii < menus[menuState].Length; ii++) {
+								GUIButton current = menus [menuState] [ii];
+								GUI.SetNextControlName (current.controlName);
+
+								if (menuState == 2 && ii < menus [menuState].Length - 1 && unlockedShapes [ii] == false)
+										GUI.enabled = false;
+								if (menuState == 3 && ii < menus [menuState].Length - 1 && unlockedElements [ii] == false)
+										GUI.enabled = false;
+
+								GUI.Button (current.rect, current.text);
+
+								GUI.enabled = true;
+						}
+
+						GUI.FocusControl (menus [menuState] [index].controlName);
+				}
+	}
+
+	void Update()
+	{
+		InputDevice inputDevice = InputManager.ActiveDevice;
+		if (inputDevice.MenuWasPressed) 
+						PauseToggle ();
+				else if (inputDevice.DPadUp.WasPressed) 
+						menuSelection ("up");
+				else if (inputDevice.DPadDown.WasPressed) 
+						menuSelection ("down");
+				else if (inputDevice.Action1.WasPressed) 
+						ActivateButton ();
+				
+	}
+
+	void PauseToggle()
+	{
+		if (paused) {
+			Time.timeScale = 1.0f;
+			ChangeMenu(0);
+		} else {
+			Time.timeScale = 0.0f;
+		}
+		paused = !paused;
+	}
+
+	void menuSelection(string direction)
+	{
+		int max = menus [menuState].Length - 1;
+		if (direction == "up") {
+			if (index == 0) {
+				index = max;
+			} else {
+				index -= 1;
+			}
+		}
+		
+		if (direction == "down") {
+			if (index == max) {
+				index = 0;
+			} else {
+				index += 1;
+			}
+		}
+	}
+
+	void ActivateButton()
+	{
+		if (menuState == 0) {
+						if (index == 0)
+								PauseToggle ();
+						else if (index == 1)
+								ChangeMenu (1);
+						else if (index == 2)
+								print ("QUIT GAME");
+				} else if (menuState == 4) {
+						if (index == 0) {
+								myCaster.myCombos [oldComboIndex].InitializeValues (newCombo.shape, newCombo.element);
+								ChangeMenu (0);
+						} else if (index == 1) {
+								ChangeMenu (menuState - 1);
+						}
+				} else {
+						if (index < menus [menuState].Length - 1) {
+								switch (menuState) {
+								case 1:
+										oldComboIndex = index;
+										ChangeMenu (menuState + 1);
+										break;
+								case 2:
+										if (unlockedShapes [index] == true) {
+												newComboShape = index;
+												ChangeMenu (menuState + 1);
+										}
+										break;
+								case 3:
+										if (unlockedElements [index] == true) {
+												newComboElement = index;
+												newCombo.InitializeValues (newComboShape, newComboElement);
+												ChangeMenu (menuState + 1);
+										}
+										break;
+								}
+						} else {
+								ChangeMenu (menuState - 1);
+						}
+				}
+			
+	}
+
+	void ChangeMenu(int whichMenu)
+	{
+		menuState = whichMenu;
+		index = 0;
+
+		switch (menuState) {
+				case 0:
+						headerText = "Paused";
+						break;
+				case 1:
+						headerText = "Select combo to replace";
+						for (int ii = 0; ii < menus[menuState].Length - 1; ii++) {
+								SpellCombo comboHandle = myCaster.myCombos [ii];
+								menus [menuState] [ii].text = comboHandle.shapeString + " " + comboHandle.elementString;
+						}
+						break;
+				case 2:
+						headerText = "Pick a Shape Rune";
+						break;
+				case 3:
+						headerText = "Pick an Element Rune";
+						break;
+				case 4:
+						SpellCombo oldCombo = myCaster.myCombos [oldComboIndex];
+						headerText = "Replace " + oldCombo.shapeString + " " + oldCombo.elementString 
+								+ " with " + newCombo.shapeString + " " + newCombo.elementString;
+						break;
+				}
+	}
 }
