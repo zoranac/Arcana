@@ -31,12 +31,40 @@ public class SpawnerScript : MonoBehaviour {
 		float rand = Random.Range(0,100);
 		if (rand <= ChanceToSpawnChest/1+(GameObject.FindGameObjectsWithTag("Chest").Length*2) && GameObject.FindGameObjectsWithTag("Chest").Length < MaxChests)
 		{
-			Instantiate(Chest,spawnPoint,transform.rotation);
+			bool spawn = false;
+			foreach (Collider2D obj in Physics2D.OverlapPointAll(spawnPoint))
+			{
+				if (obj.tag == "Floor")
+				{
+					spawn = true;
+				}
+				if (obj.tag == "Wall")
+				{
+					spawn = false;
+					break;
+				}
+			}
+			if (spawn)
+				Instantiate(Chest,spawnPoint,transform.rotation);
 		}
 		rand = Random.Range(0,100);
 		if (rand <= ChanceToSpawnEnemy/1+(GameObject.FindGameObjectsWithTag("Enemy").Length*2) && GameObject.FindGameObjectsWithTag("Enemy").Length < MaxEnemies)
 		{
-			Instantiate(Enemy,spawnPoint,transform.rotation);
+			bool spawn = false;
+			foreach (Collider2D obj in Physics2D.OverlapPointAll(spawnPoint))
+			{
+				if (obj.tag == "Floor")
+				{
+					spawn = true;
+				}
+				if (obj.tag == "Wall")
+				{
+					spawn = false;
+					break;
+				}
+			}
+			if (spawn)
+				Instantiate(Enemy,spawnPoint,transform.rotation);
 		}
 	}
 }
