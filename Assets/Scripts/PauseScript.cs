@@ -18,10 +18,23 @@ public class PauseScript : MonoBehaviour {
 	private int newComboShape;
 	private int newComboElement;
 	private SpellCombo newCombo;
+	private bool minigame;
+
+	public void Pause()
+	{
+		paused = true;
+		minigame = true;
+	}
+	public void UnPause()
+	{
+		paused = false;
+		minigame = false;
+	}
 
 	void Start()
 	{
 		paused = false;
+		minigame = false;
 
 		menus[0] = new GUIButton[3];
 		menus [0] [0] = new GUIButton ("mainResume", "Resume");
@@ -70,7 +83,7 @@ public class PauseScript : MonoBehaviour {
 
 	void OnGUI()
 	{
-		if (paused) {
+		if (paused && !minigame) {
 						GUI.Label (headerRect, headerText);
 
 						for (int ii = 0; ii < menus[menuState].Length; ii++) {

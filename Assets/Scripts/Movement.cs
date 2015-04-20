@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using InControl;
+using InControl;  	
 
 public class Movement : MonoBehaviour {
 	
@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour {
 			stickInput = stickInput.normalized * ((stickInput.magnitude - deadzone) / (1 - deadzone));
 		}
 		//stickInput is now adjusted with a deadzone
-		
+
 		float magnitude = stickInput.magnitude; //save the magnitude
 		float angle = Mathf.Atan2 (stickInput.y, stickInput.x); //And save the direction
 		Vector2 movement = new Vector2 (magnitude * Mathf.Cos (angle), magnitude * Mathf.Sin (angle)); //Convert polar to cartesian coordinates
