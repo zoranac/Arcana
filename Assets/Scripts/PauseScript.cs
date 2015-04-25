@@ -5,8 +5,8 @@ using InControl;
 public class PauseScript : MonoBehaviour {
 
 	public SpellcastScript myCaster;
-	public bool[] unlockedShapes = new bool[3];
-	public bool[] unlockedElements = new bool[6];
+	public static bool[] unlockedShapes = new bool[3];
+	public static bool[] unlockedElements = new bool[6];
 
 	private bool paused;
 	private GUIButton[][] menus = new GUIButton[5][];

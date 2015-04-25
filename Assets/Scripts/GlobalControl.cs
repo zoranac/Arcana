@@ -3,23 +3,21 @@ using System.Collections;
 
 public class GlobalControl : MonoBehaviour {
 	public static GlobalControl globalControl;
+	public int coins;
+	public SpellcastStats stats;
 
 	void Awake () {
 		if(!globalControl) {
+			//Initialize globalcontrol
 			globalControl = this;
 			DontDestroyOnLoad(gameObject);
+			//Initialize variables on game start
+			coins = 0;
+			stats = new SpellcastStats();
+			stats.InitializeValues(1, 1, 1, 1);
+			PauseScript.unlockedShapes = new bool[]{true, false, false};
+			PauseScript.unlockedElements = new bool[]{true, false, false, false, false, false};
 		}else
 			Destroy(gameObject);
-		
-	}
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }

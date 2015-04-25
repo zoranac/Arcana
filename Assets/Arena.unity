@@ -2100,7 +2100,6 @@ GameObject:
   - 114: {fileID: 1387003271}
   - 114: {fileID: 1387003272}
   - 61: {fileID: 1387003273}
-  - 114: {fileID: 1387003274}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2216,20 +2215,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
---- !u!114 &1387003274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1387003266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889aae0954bc28845afe6f9cc014d232, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myCaster: {fileID: 790061130}
-  unlockedShapes: 010001
-  unlockedElements: 010101000000
 --- !u!1001 &1422773831
 Prefab:
   m_ObjectHideFlags: 0

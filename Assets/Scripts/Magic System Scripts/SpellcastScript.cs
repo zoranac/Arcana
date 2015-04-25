@@ -7,10 +7,8 @@ public class SpellcastScript : MonoBehaviour {
 	
 	public GameObject spell; //The gameobject for the spell projectile fired
 	public Transform origin; //Transform to spawn the spell shot at
-	//Player stats, can possibly change with leveling
-	public SpellcastStats stats = new SpellcastStats();
 	public float shotCool = 0f; //Cooldown of the fire rate
-	
+
 	public SpellCombo[] myCombos = new SpellCombo[]{
 		new SpellCombo(),
 		new SpellCombo(),
@@ -20,7 +18,7 @@ public class SpellcastScript : MonoBehaviour {
 	
 	public int selectedSpell = 0;
 
-
+	private SpellcastStats stats;
 	
 	void Start () {
 		myCombos [0].InitializeValues (0, 0);
@@ -28,7 +26,7 @@ public class SpellcastScript : MonoBehaviour {
 		myCombos [2].InitializeValues (1, 2);
 		myCombos [3].InitializeValues (0, 4);
 		
-		stats = new SpellcastStats ();
+		stats = GlobalControl.globalControl.stats;
 		stats.InitializeValues (3f, 3f, 3f, 3f);
 	}
 	
