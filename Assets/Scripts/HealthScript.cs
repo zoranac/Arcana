@@ -17,6 +17,7 @@ public class HealthScript : MonoBehaviour {
 
 	void Die()
 	{
+		GlobalControl.globalControl.Kills++;
 		GlobalControl.globalControl.coins += Random.Range (1, 2); //Gives coins on enemy death
 		Destroy (this.gameObject); //Destroy the enemy
 	}

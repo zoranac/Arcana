@@ -4,6 +4,8 @@ using System.Collections;
 public class GlobalControl : MonoBehaviour {
 	public static GlobalControl globalControl;
 	public int coins;
+	public int KillsToStartMinigame = 20;
+	public int Kills = 0;
 	public SpellcastStats stats;
 
 	void Awake () {
