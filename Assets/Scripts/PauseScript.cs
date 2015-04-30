@@ -23,11 +23,13 @@ public class PauseScript : MonoBehaviour {
 	public void Pause()
 	{
 		paused = true;
+		Time.timeScale = 0.0f;
 		minigame = true;
 	}
 	public void UnPause()
 	{
 		paused = false;
+		Time.timeScale = 1.0f;
 		minigame = false;
 	}
 
@@ -35,6 +37,8 @@ public class PauseScript : MonoBehaviour {
 	{
 		paused = false;
 		minigame = false;
+
+		myCaster = GetComponentInChildren<SpellcastScript>();
 
 		menus[0] = new GUIButton[3];
 		menus [0] [0] = new GUIButton ("mainResume", "Resume");
@@ -113,8 +117,8 @@ public class PauseScript : MonoBehaviour {
 						menuSelection ("up");
 				else if (inputDevice.DPadDown.WasPressed) 
 						menuSelection ("down");
-				else if (inputDevice.Action1.WasPressed) 
-						ActivateButton ();
+//				else if (inputDevice.Action1.WasPressed) 
+//						ActivateButton ();
 				
 	}
 

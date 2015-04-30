@@ -4,7 +4,7 @@ using InControl;
 
 public class MinigameScript : MonoBehaviour {
 	public GameObject Player;
-	public float ShowTimeDuration = .5f;
+	public float ShowTimeDurationInFrames;
 	InputControl[] ButtonOrder = new InputControl[5];
 	InputDevice inputDevice;
 	int currentSpot = 0;
@@ -12,7 +12,7 @@ public class MinigameScript : MonoBehaviour {
 	bool showedOrder = false;
 	int showNumber = 0;
 	float showtime = 0;
-
+	float UpdateTimer = 0f;
 	// Use this for initialization
 	void Start () {
 		Player = transform.parent.gameObject;
@@ -28,22 +28,40 @@ public class MinigameScript : MonoBehaviour {
 			GlobalControl.globalControl.Kills >= GlobalControl.globalControl.KillsToStartMinigame)
 		{
 			//And has enough kills;
+			print ("setup Minigame");
 			Setup();
 		}
 		if (running)
 		{
-			if (showedOrder)
-				Run();
-			else
-				ShowOrder();
+			UpdateTimer++;
 			if (currentSpot >= 5)
 			{
 				//success
+				print ("success!");
+				gameObject.GetComponent<TextMesh>().text = "O";
+				EndMinigame();
 			}
+			else if (showedOrder)
+				Run();
+			else
+				ShowOrder();
+
 		}
+	}
+	void EndMinigame()
+	{
+		currentSpot = 0;
+		running = false;
+		showedOrder = false;
+		showNumber = 0;
+		showtime = 0;
+		UpdateTimer = 0f;
+		gameObject.GetComponent<TextMesh>().text = "";
+		Player.GetComponent<PauseScript>().UnPause();
 	}
 	public void Setup()
 	{
+		UpdateTimer = 0;
 		showedOrder = false;
 		Player.GetComponent<PauseScript>().Pause();
 		running = true;
@@ -59,15 +77,23 @@ public class MinigameScript : MonoBehaviour {
 			if (rand == 3)
 				ButtonOrder[i] = inputDevice.Action4;
 		}
-		showtime = Time.time;
+		showtime = UpdateTimer;
 	}
 	void ShowOrder()
 	{
-		if (Time.time >= showtime + ShowTimeDuration)
+
+		if (UpdateTimer >= showtime + ShowTimeDurationInFrames)
 		{
-			showNumber++;
-			showtime = Time.time;
-			gameObject.GetComponent<TextMesh>().text = showNumber.ToString();
+			if (showNumber >= ButtonOrder.Length)
+			{
+				showedOrder = true;
+				gameObject.GetComponent<TextMesh>().text = "?";
+			}
+			else{
+				showtime = UpdateTimer;
+				gameObject.GetComponent<TextMesh>().text = ButtonOrder[showNumber].ToString();
+				showNumber++;
+			}
 		}
 	}
 	void Run()
@@ -101,15 +127,17 @@ public class MinigameScript : MonoBehaviour {
 				if (!ButtonOrder[currentSpot-1].IsPressed) 
 				{
 					//Fail State
-					running = false;
-					Player.GetComponent<PauseScript>().UnPause();
+					print ("failed :(");
+					gameObject.GetComponent<TextMesh>().text = "X";
+					EndMinigame();
 				}
 			}
 			else
 			{
 				//Fail State
-				running = false;
-				Player.GetComponent<PauseScript>().UnPause();
+				print ("failed :(");
+				gameObject.GetComponent<TextMesh>().text = "X";
+				EndMinigame();
 			}
 		}
 	}

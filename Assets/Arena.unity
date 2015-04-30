@@ -1452,7 +1452,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 835945622}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1387003267}
@@ -1469,7 +1469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  ShowTimeDuration: .5
+  ShowTimeDurationInFrames: 50
 --- !u!1 &856600783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,6 +2184,7 @@ GameObject:
   - 114: {fileID: 1387003271}
   - 114: {fileID: 1387003272}
   - 61: {fileID: 1387003273}
+  - 114: {fileID: 1387003274}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2300,6 +2301,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
+--- !u!114 &1387003274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1387003266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889aae0954bc28845afe6f9cc014d232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCaster: {fileID: 0}
 --- !u!1001 &1422773831
 Prefab:
   m_ObjectHideFlags: 0
@@ -2947,6 +2960,48 @@ Prefab:
   m_RootGameObject: {fileID: 207660268}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &1856381066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1856381068}
+  - 114: {fileID: 1856381067}
+  m_Layer: 0
+  m_Name: GlobalControl
+  m_TagString: GlobalControl
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1856381067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1856381066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994ccf4e517c37141819ad593a980573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coins: 0
+  KillsToStartMinigame: 0
+  Kills: 0
+--- !u!4 &1856381068
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1856381066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
 --- !u!1 &1881956418
 GameObject:
   m_ObjectHideFlags: 0
