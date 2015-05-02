@@ -117,8 +117,8 @@ public class PauseScript : MonoBehaviour {
 						menuSelection ("up");
 				else if (inputDevice.DPadDown.WasPressed) 
 						menuSelection ("down");
-//				else if (inputDevice.Action1.WasPressed) 
-//						ActivateButton ();
+				else if (inputDevice.Action1.WasPressed) 
+						ActivateButton ();
 				
 	}
 
