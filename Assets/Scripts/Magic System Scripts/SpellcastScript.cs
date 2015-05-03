@@ -18,16 +18,11 @@ public class SpellcastScript : MonoBehaviour {
 	
 	public int selectedSpell = 0;
 
-	private SpellcastStats stats;
-	
 	void Start () {
 		myCombos [0].InitializeValues (0, 0);
-		myCombos [1].InitializeValues (2, 1);
-		myCombos [2].InitializeValues (1, 2);
-		myCombos [3].InitializeValues (0, 4);
-		
-		stats = GlobalControl.globalControl.stats;
-		stats.InitializeValues (3f, 3f, 3f, 3f);
+		myCombos [1].InitializeValues (0, 0);
+		myCombos [2].InitializeValues (0, 0);
+		myCombos [3].InitializeValues (0, 0);
 	}
 	
 	// Update is called once per frame
@@ -62,11 +57,12 @@ public class SpellcastScript : MonoBehaviour {
 				}
 		
 		if (aiming && shotCool <= 0f) { //If the shot has cooled down and the player is aiming
-			shotCool += 100f - (stats.frequency * 10f); //Add a value to the cooldown variable equal to the frequency stat times a flat multiplier
+			SpellcastStats myStats = GlobalControl.globalControl.stats; //Handle to the player stats
+			shotCool += 100f - (myStats.stats[0] * 10f); //Add a value to the cooldown variable equal to the frequency stat times a flat multiplier
 			GameObject mySpell = (GameObject)Instantiate (spell, origin.position, origin.rotation); //Instantiate a spell
 			Vector2 direction = origin.position - this.transform.position; //Calculate a vector2 of direction based on player position and wand position
 			mySpell.rigidbody2D.AddForce (direction * 600f); //Add the force in the direction calculated times the shotspeed stat
-			mySpell.GetComponent<SpellShotScript> ().stats = stats.ReturnCopy ();
+			mySpell.GetComponent<SpellShotScript> ().stats = myStats.ReturnCopy ();
 			mySpell.GetComponent<SpellShotScript> ().myCombo = myCombos [selectedSpell];
 			mySpell.GetComponent<SpellShotScript> ().myWand = this.gameObject;
 			mySpell.GetComponent<SpellShotScript> ().rotationAtFire = this.transform.rotation;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpellCombo{
+public class SpellCombo {
 
 	public int shape;
 	public int element;

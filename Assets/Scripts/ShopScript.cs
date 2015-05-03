@@ -9,30 +9,31 @@ public class ShopScript : MonoBehaviour {
 	public float menuButtonWidth = 100f;
 	public float menuButtonHeight = 20f;
 	public int runePrice = 50;
+	public int basePointPrice = 20;
+	public bool shopping;
 
-	private bool shopping;
+	private bool readyToBuy;
+	private bool purchaseJustMade;
+	private bool purchaseJustCanceled;
 	private GUIButton[][] menus = new GUIButton[3][];
 	private int menuState;
 	private int index;
-	private string headerText;
-	private Rect headerRect;
-	private bool readyToBuy;
 	private int[] purchaseIndex;
-	private bool purchaseJustMade;
-	private bool purchaseJustCanceled;
+	private Rect headerRect;
+	private string headerText;
 	private string purchaseString;
-	private int trainingIndex;
-	private string trainingString;
-	private float[] statsAsArray;
 
 	void Start()
 	{
 		shopping = false;
+		readyToBuy = false;
+		purchaseJustMade = false;
+		purchaseJustCanceled = false;
 
 		menus [0] = new GUIButton[3];
 		menus [0] [0] = new GUIButton ("mainRunes", "Runes");
 		menus [0] [1] = new GUIButton ("mainTraining", "Training");
-		menus [0] [2] = new GUIButton ("mainBack", "No");
+		menus [0] [2] = new GUIButton ("mainBack", "Leave");
 		menus [1] = new GUIButton[12];
 		menus [1] [0] = new GUIButton ("shoppingShape0", "Circle");
 		menus [1] [1] = new GUIButton ("shoppingShape1", "Line");
@@ -55,73 +56,61 @@ public class ShopScript : MonoBehaviour {
 		menus [2] [5] = new GUIButton ("levelingDeny", "No");
 		menus [2] [6] = new GUIButton ("levelingBack", "Back");
 
+		Rect newRect;
+		for (int ii = 0; ii < menus.Length; ii++) {
+						for (int jj = 0; jj < menus[ii].Length; jj++) {
+								newRect = new Rect (menuLeft, menuTop + ((float)jj * menuButtonHeight), menuButtonWidth, menuButtonHeight);
+								menus [ii] [jj].SetRect (newRect);
+						}
+				}
+
 		menuState = 0;
 		index = 0;
+		purchaseIndex = new int[]{0, 0};
 		
-		headerText = "I am ERROR";
-		headerRect = new Rect (0f, Screen.height - 200f, Screen.width, 200f);
-
-		Rect newRect;
-		for (int ii = 0; ii < menus[0].Length; ii++) {
-						newRect = new Rect (menuLeft, menuTop + ((float)ii * menuButtonHeight), menuButtonWidth, menuButtonHeight);
-						menus [0] [ii].SetRect (newRect);
-				}
-		for (int ii = 0; ii < menus[1].Length; ii++) {
-						if (ii < 3)
-								newRect = new Rect (menuLeft, menuTop + ((float)ii * menuButtonHeight), menuButtonWidth, menuButtonHeight);
-						else if (ii < 9)
-								newRect = new Rect (menuLeft + menuButtonWidth, menuTop + ((float)(ii - 3) * menuButtonHeight), menuButtonWidth, menuButtonHeight);
-						else
-								newRect = new Rect (menuLeft, menuTop + ((float)(ii - 6) * menuButtonHeight), menuButtonWidth, menuButtonHeight);
-						menus [1] [ii].SetRect (newRect);
-				}
-		for (int ii = 0; ii < menus[2].Length; ii++) {
-						newRect = new Rect (menuLeft, menuTop + ((float)ii * menuButtonHeight), menuButtonWidth, menuButtonHeight);
-						menus [2] [ii].SetRect (newRect);
-				}
-
-		readyToBuy = false;
-		purchaseIndex = new int[2];
-		purchaseJustMade = false;
-		purchaseJustCanceled = false;
-		statsAsArray = new float[4];
+		headerRect = new Rect(0, Screen.height - 100f, Screen.width, 100f);
+		headerText = "I AM ERROR";
+		purchaseString = string.Empty;
 	}
 	
 	void OnGUI()
 	{
 		if (shopping) {
-						UpdateHeader ();
-						GUI.Box (headerRect, headerText);
+				for (int ii = 0; ii < menus[menuState].Length; ii++) {
+						GUI.Box(headerRect, headerText);
 
-						for (int ii = 0; ii < menus[menuState].Length; ii++) {
-								GUIButton current = menus [menuState] [ii];
-								GUI.SetNextControlName (current.controlName);
+						GUIButton current = menus [menuState] [ii];
+						GUI.SetNextControlName (current.controlName);
 
-								GUI.enabled = false;
-								if (menuState == 0) {
-										GUI.enabled = true;
-								} else if (menuState == 1) {
-										if (ii > 10)
-												GUI.enabled = true;
-										else if (ii > 8 && readyToBuy)
-												GUI.enabled = true;
-										else if (ii > 2 && CheckIfRuneViablePurchase (1, ii - 3))
-												GUI.enabled = true;
-										else if (ii >= 0 && CheckIfRuneViablePurchase (0, ii))
-												GUI.enabled = true;
-								} else if (menuState == 2) {
-										if (ii > 3 && readyToBuy)
-												GUI.enabled = true;
-										else if (ii >= 0 && CheckIfStatViablePurchase (ii))
-												GUI.enabled = true;
+						string displayText = string.Empty;
+						switch (menuState) {
+						case 1:
+								if (ii < 3) {
+										GUI.enabled = CheckIfRuneViablePurchase (0, ii);
+										displayText = runePrice + "g ";
+								} else if (ii < 9) {
+										GUI.enabled = CheckIfRuneViablePurchase (1, ii - 3);
+										displayText = runePrice + "g ";
+								} else if (ii < 11) {
+										GUI.enabled = readyToBuy;
 								}
-				
-								GUI.Button (current.rect, current.text);
-				
-								GUI.enabled = true;
+								break;
+						case 2:
+								if (ii < 4) {
+										GUI.enabled = CheckIfStatViablePurchase(ii);
+										displayText = (basePointPrice * (int)GlobalControl.globalControl.stats.stats[ii]) + "g ";
+								} else if (ii < 6) {
+										GUI.enabled = readyToBuy;
+								}
+								break;
 						}
-						GUI.FocusControl (menus [menuState] [index].controlName);
+						displayText += current.text;
+						GUI.Button (current.rect, displayText);
+
+						GUI.enabled = true;
 				}
+				GUI.FocusControl (menus [menuState] [index].controlName);
+			}
 	}
 
 	void Update()
@@ -132,34 +121,22 @@ public class ShopScript : MonoBehaviour {
 								menuSelection ("up");
 						else if (inputDevice.DPadDown.WasPressed) 
 								menuSelection ("down");
-						else if (inputDevice.DPadLeft.WasPressed)
-								menuSelection ("left");
-						else if (inputDevice.DPadRight.WasPressed)
-								menuSelection ("right");
 						else if (inputDevice.Action1.WasPressed) 
 								ActivateButton ();
-						else if (inputDevice.MenuWasPressed)
-								ShopToggle ();
 				}
 	}
 
-	void OnTriggerEnter(Collider other)
+	void ShopToggle()
 	{
-		if (other.gameObject.tag == "Player")
-						ShopToggle ();
-	}
-
-	void OnTriggerExit(Collider other)
-	{
-		if (other.gameObject.tag == "Player")
-						ShopToggle ();
+		ChangeMenu (0);
+		ClearFlags ();
+		UpdateHeader ();
+		shopping = !shopping;
 	}
 
 	bool CheckIfStatViablePurchase(int index)
 	{
-		UpdateStatArray ();
-
-		if (GlobalControl.globalControl.stats.atCap [index] == true || GlobalControl.globalControl.coins < (int)statsAsArray[index] * 20)
+		if (readyToBuy == true || GlobalControl.globalControl.stats.atCap [index] == true || GlobalControl.globalControl.coins < GlobalControl.globalControl.stats.stats[index] * basePointPrice)
 						return false;
 
 		return true;
@@ -167,7 +144,7 @@ public class ShopScript : MonoBehaviour {
 
 	bool CheckIfRuneViablePurchase(int type, int index)
 	{
-		if (GlobalControl.globalControl.coins < runePrice) 
+		if (readyToBuy == true || GlobalControl.globalControl.coins < runePrice) 
 						return false;
 				else if (type == 0 && PauseScript.unlockedShapes [index] == true) 
 						return false;
@@ -176,12 +153,35 @@ public class ShopScript : MonoBehaviour {
 				else
 						return true;
 	}
-	
-	void ShopToggle()
+
+	void menuSelection(string direction)
 	{
-		ChangeMenu (0);
-		ClearFlags ();
-		shopping = !shopping;
+		
+		int max = menus [menuState].Length - 1;
+		if (direction == "up") {
+			if (index == 0) {
+				index = max;
+			} else {
+				index -= 1;
+			}
+		}
+		
+		if (direction == "down") {
+			if (index == max) {
+				index = 0;
+			} else {
+				index += 1;
+			}
+		}
+	}
+
+	void ChangeMenu(int whichMenu)
+	{
+		menuState = whichMenu;
+		if (menuState != 0)
+						index = menus [menuState].Length - 1;
+				else
+						index = 0;
 	}
 
 	void ClearFlags()
@@ -191,126 +191,104 @@ public class ShopScript : MonoBehaviour {
 		purchaseJustCanceled = false;
 	}
 	
-	void menuSelection(string direction)
-	{
-		if (menuState == 0 || menuState == 2) {
-						int max = menus [menuState].Length - 1;
-						if (direction == "up") {
-								if (index == 0) {
-										index = max;
-								} else {
-										index -= 1;
-								}
-						}
-		
-						if (direction == "down") {
-								if (index == max) {
-										index = 0;
-								} else {
-										index += 1;
-								}
-						}
-				} else if (menuState == 1) {
-						if (direction == "up") {
-								if (index == 0)
-										index = 11;
-								else if (index == 3)
-										index = 6;
-								else if (index == 9)
-										index = 2;
-								else
-										index -= 1;
-						} else if (direction == "down") {
-								if (index == 2)
-										index = 9;
-								else if (index == 6)
-										index = 3;
-								else if (index == 11)
-										index = 0;
-						} else if (direction == "left" || direction == "right") { //Because there are only two collumns this works for both
-								if (index < 3)
-										index += 3;
-								else if (index < 6)
-										index -= 3;
-								else if (index < 9)
-										index += 3;
-								else
-										index -= 3;
-						}
-				}
-	}
-	
 	void ActivateButton()
 	{
-		if (menuState == 0) {
-						if (index == 0)
+		purchaseJustMade = false;
+		purchaseJustCanceled = false;
+		switch (menuState) {
+				case 0:
+						switch (index) {
+						case 0:
 								ChangeMenu (1);
-						else if (index == 1)
+								break;
+						case 1:
 								ChangeMenu (2);
-						else if (index == 2)
+								break;
+						case 2:
 								ShopToggle ();
-				} else if (menuState == 1) {
-						purchaseJustMade = false;
-						purchaseJustCanceled = false;
-						if (readyToBuy) {
-								if (index == 9) {
-										readyToBuy = false;
-										purchaseJustMade = true;
-										switch (purchaseIndex [0]) {
-										case 0:
-												PauseScript.unlockedShapes [purchaseIndex [1]] = true;
-												break;
-										case 1:
-												PauseScript.unlockedElements [purchaseIndex [1]] = true;
-												break;
-										}
-								} else if (index == 10) {
-										readyToBuy = false;
-										purchaseJustCanceled = true;
-								}
-						} else {
-								if (index < 3 && CheckIfRuneViablePurchase (0, index)) {
-										readyToBuy = true;
+								break;
+						}
+						break;
+				case 1:
+						if (index < 3) {
+								if (CheckIfRuneViablePurchase (0, index)) {
 										purchaseIndex [0] = 0;
 										purchaseIndex [1] = index;
 										UpdatePurchaseString ();
-								} else if (index < 9 && CheckIfRuneViablePurchase (1, index - 3)) {
 										readyToBuy = true;
+										index = 9;
+								}
+						} else if (index < 9) {
+								if (CheckIfRuneViablePurchase (1, index - 3)) {
 										purchaseIndex [0] = 1;
 										purchaseIndex [1] = index - 3;
 										UpdatePurchaseString ();
-								}
-						}
-
-						if (index == 11) {
-								ChangeMenu (0);
-								ClearFlags ();
-						}
-				} else if (menuState == 2) {
-						purchaseJustMade = false;
-						purchaseJustCanceled = false;
-						if (readyToBuy) {
-								if (index == 4) {
-										readyToBuy = false;
-										purchaseJustMade = true;
-										GlobalControl.globalControl.stats.IncrementValue (trainingIndex);
-										UpdateStatArray ();
-								} else if (index == 5) {
-										readyToBuy = false;
-										purchaseJustCanceled = true;
-								}
-						} else {
-								if (index < 4 && CheckIfStatViablePurchase (index)) {
 										readyToBuy = true;
-										trainingIndex = index;
-										UpdateTrainingString ();
+										index = 9;
 								}
-						}
-			
-						if (index == 6) {
+						} else if (index < 11) {
+								if (readyToBuy) {
+										if (index == 9) {
+												ApplyPurchase ();
+												purchaseJustMade = true;
+												readyToBuy = false;
+												index = 11;
+										} else if (index == 10) {
+												purchaseJustCanceled = true;
+												readyToBuy = false;
+												index = 11;
+										}
+								}
+						} else if (index == 11) {
 								ChangeMenu (0);
-								ClearFlags ();
 						}
+						break;
+				case 2:
+						if (index < 4) {
+								if (CheckIfStatViablePurchase (index)) {
+										purchaseIndex [0] = 2;
+										purchaseIndex [1] = index;
+										UpdatePurchaseString ();
+										readyToBuy = true;
+										index = 4;
+								}
+						} else if (index < 6) {
+								if (readyToBuy) {
+										if (index == 4) {
+												ApplyPurchase ();
+												purchaseJustMade = true;
+												readyToBuy = false;
+												index = 6;
+										}
+										if (index == 5) {
+												purchaseJustCanceled = true;
+												readyToBuy = false;
+												index = 6;
+										}
+								}
+						} else if (index == 6) {
+								ChangeMenu (0);
+						}
+						break;
+				}
+		UpdateHeader ();
+	}
+
+	void ApplyPurchase()
+	{
+		switch (purchaseIndex [0]) {
+				case 0:
+						GlobalControl.globalControl.coins -= runePrice;
+						PauseScript.unlockedShapes [purchaseIndex [1]] = true;
+						break;
+				case 1:
+						GlobalControl.globalControl.coins -= runePrice;
+						PauseScript.unlockedElements [purchaseIndex [1]] = true;
+						break;
+				case 2:
+						GlobalControl.globalControl.coins -= basePointPrice * (int)GlobalControl.globalControl.stats.stats [purchaseIndex [1]];
+						GlobalControl.globalControl.stats.IncrementValue (purchaseIndex [1]);
+						break;
 				}
 	}
 
@@ -349,71 +327,52 @@ public class ShopScript : MonoBehaviour {
 								purchaseString = "Earth";
 								break;
 						}
-				}
-	}
-
-	void UpdateTrainingString()
-	{
-		switch (trainingIndex) {
-				case 0:
-						trainingString = "Fire Rate";
-						break;
-				case 1:
-						trainingString = "Spell Size";
-						break;
-				case 2:
-						trainingString = "Spell Duration";
-						break;
-				case 3:
-						trainingString = "Spell Damage";
-						break;
+				} else if (purchaseIndex [0] == 2) {
+						switch (purchaseIndex [1]) {
+						case 0:
+								purchaseString = "Fire Rate";
+								break;
+						case 1:
+								purchaseString = "Spell Size";
+								break;
+						case 2:
+								purchaseString = "Spell Duration";
+								break;
+						case 3:
+								purchaseString = "Spell Damage";
+								break;
+						}
 				}
 	}
 
 	void UpdateHeader()
 	{
-		if (menuState == 0) {
-								headerText = "Welcome, would you like to shop?";
-				} else if (menuState == 1) {
+		switch (menuState) {
+				case 0:
+						headerText = "Welcome! I sell runes at my shop for a flat price, or I can train your skills as a spellcaster.";
+						break;
+				case 1:
 						if (purchaseJustMade)
-								headerText = "Thank you for your business.";
+								headerText = "Thank you for your coinage. Good luck out there.";
 						else if (purchaseJustCanceled)
-								headerText = "Alright, tell me if you find something else you like.";
-						else if (readyToBuy) 
-								headerText = "Would you like to buy the " + purchaseString + " rune for " + runePrice + "coins?";
+								headerText = "Alright, hope you find something else you like.";
+						else if (readyToBuy)
+								headerText = "Would you like to buy the " + purchaseString + " Rune for " + runePrice + " gold?";
 						else
-								headerText = "All runes cost " + runePrice + " coins. What would you like to buy?";
-		} else if (menuState == 2) {
-			if (purchaseJustMade)
-				headerText = "Thank you for your business.";
-			else if (purchaseJustCanceled)
-				headerText = "Alright, tell me if you find something else you like.";
-			else if (readyToBuy)
-				headerText = "Would you like to train " + trainingString
-					+ " to level " + ((int)statsAsArray[trainingIndex]+1)
-					+ " for " + ((int)statsAsArray[trainingIndex] * 20) + " coins?";
-			else
-				headerText = "Your stats are "
-					+ statsAsArray[0] + " for Frequency, "
-					+ statsAsArray[1] + " for Spell Size, "
-					+ statsAsArray[2] + " for Spell Duration, and"
-					+ statsAsArray[3] + " for Spell Damage. " 
-					+ "What would you like to buy?";
-		}
-	}
-
-	void UpdateStatArray()
-	{
-		statsAsArray [0] = GlobalControl.globalControl.stats.frequency;
-		statsAsArray [1] = GlobalControl.globalControl.stats.size;
-		statsAsArray [2] = GlobalControl.globalControl.stats.duration;
-		statsAsArray [3] = GlobalControl.globalControl.stats.damage;
-	}
-	
-	void ChangeMenu(int whichMenu)
-	{
-		menuState = whichMenu;
-		index = 0;
-		UpdateHeader ();
+								headerText = "I can get you new pages for your spellbook...for a price.";
+						break;
+				case 2:
+						if (purchaseJustMade)
+								headerText = "...And that's enough training for this lesson. Come back any time.";
+						else if (purchaseJustCanceled)
+								headerText = "If you're sure. Don't get overconfident now.";
+						else if (readyToBuy) {
+								int statValue = (int)GlobalControl.globalControl.stats.stats [purchaseIndex [1]];
+								int statPrice = statValue * basePointPrice;
+								headerText = "Do you want to take lesson " + statValue + " in " + purchaseString + " for " + statPrice + " gold?";
+						} else
+								headerText = "I'm an old spellcaster myself. I can teach you the critical skills to make your spells devestating. Beginner lessons are cheap, expert...less so.";
+						break;
+				}
 	}
 }

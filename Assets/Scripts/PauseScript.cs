@@ -113,13 +113,14 @@ public class PauseScript : MonoBehaviour {
 		InputDevice inputDevice = InputManager.ActiveDevice;
 		if (inputDevice.MenuWasPressed) 
 						PauseToggle ();
-				else if (inputDevice.DPadUp.WasPressed) 
-						menuSelection ("up");
-				else if (inputDevice.DPadDown.WasPressed) 
-						menuSelection ("down");
-//				else if (inputDevice.Action1.WasPressed) 
-//						ActivateButton ();
-				
+		if (paused) {
+						if (inputDevice.DPadUp.WasPressed) 
+								menuSelection ("up");
+						else if (inputDevice.DPadDown.WasPressed) 
+								menuSelection ("down");
+						else if (inputDevice.Action1.WasPressed) 
+								ActivateButton ();
+				}
 	}
 
 	void PauseToggle()
@@ -161,7 +162,7 @@ public class PauseScript : MonoBehaviour {
 						else if (index == 1)
 								ChangeMenu (1);
 						else if (index == 2)
-								print ("QUIT GAME");
+								Application.Quit();
 				} else if (menuState == 4) {
 						if (index == 0) {
 								myCaster.myCombos [oldComboIndex].InitializeValues (newCombo.shape, newCombo.element);

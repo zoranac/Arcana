@@ -8,7 +8,7 @@ public class SpellWindScript : SpellParentScript {
 	public List<GameObject> enemiesInZone = new List<GameObject>();
 
 	void Start () {
-		Invoke ("Die", stats.duration); //Invoke the die function after however many seconds the duration stat is
+		Invoke ("Die", stats.stats[2]); //Invoke the die function after however many seconds the duration stat is
 		this.GetComponent<SpriteRenderer> ().color = Color.white; //Change the color of the spell to blue. DEFAULT
 	}
 	
@@ -19,7 +19,7 @@ public class SpellWindScript : SpellParentScript {
 			if (enemiesDamaged.Contains(other.gameObject) == false) //Check if this enemy has been damaged by this spell before
 			{
 				enemiesDamaged.Add(other.gameObject); //If not, add it to the list of damaged enemies so none get hit multiple times
-				other.gameObject.GetComponent<HealthScript>().Decriment(stats.damage / 2f); //Deal the flat damage stat 
+				other.gameObject.GetComponent<HealthScript>().Decriment(stats.stats[3] / 2f); //Deal the flat damage stat 
 			}
 		}
 	}

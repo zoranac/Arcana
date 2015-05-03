@@ -10,7 +10,7 @@ public class SpellFireScript : SpellParentScript { //Inherit from the spell pare
 	// Use this for initialization
 	void Start () {
 		InvokeRepeating ("Burn", .5f, .5f); //Invoke a repeating function to burn damage over time
-		Invoke ("Die", stats.duration); //Invoke the die function after however many seconds the duration stat is
+		Invoke ("Die", stats.stats[2]); //Invoke the die function after however many seconds the duration stat is
 		this.GetComponent<SpriteRenderer> ().color = Color.red; //Change the color of the spell to red. DEFAULT
 	}
 
@@ -34,7 +34,7 @@ public class SpellFireScript : SpellParentScript { //Inherit from the spell pare
 						//Inflict base damage divided by four (base duration is two seconds, burn is called twice per second)
 						//Then store the boolean if the enemy has died. Upgrading duration or damage will increase net damage dealt
 						if (enemiesInZone [ii] != null) {
-								enemiesInZone [ii].GetComponent<HealthScript> ().Decriment ((stats.damage / stats.duration) * 2f);
+								enemiesInZone [ii].GetComponent<HealthScript> ().Decriment ((stats.stats[3] / stats.stats[2]) * 2f);
 						}
 						if (enemiesInZone [ii] == null) {
 								enemiesInZone.Remove (enemiesInZone [ii]);

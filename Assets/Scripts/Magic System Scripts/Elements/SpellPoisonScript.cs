@@ -9,8 +9,8 @@ public class SpellPoisonScript : SpellParentScript {
 	private float modifier = 1f; //Variable used to half damage after the spell reaches its duration
 	
 	void Start () {
-		Invoke ("Expire", stats.duration);
-		Invoke ("Die", stats.duration * 2f); //Invoke the die function after however many seconds the duration stat is
+		Invoke ("Expire", stats.stats[2]);
+		Invoke ("Die", stats.stats[2] * 2f); //Invoke the die function after however many seconds the duration stat is
 		this.GetComponent<SpriteRenderer> ().color = Color.magenta; //Change the color of the spell to blue. DEFAULT
 	}
 	
@@ -20,7 +20,7 @@ public class SpellPoisonScript : SpellParentScript {
 			if (enemiesDamaged.Contains(other.gameObject) == false) //Check if this enemy has been damaged by this spell before
 			{
 				enemiesDamaged.Add(other.gameObject); //If not, add it to the list of damaged enemies so none get hit multiple times
-				other.gameObject.GetComponent<HealthScript>().Decriment(stats.damage / modifier); //Deal the flat damage stat 
+				other.gameObject.GetComponent<HealthScript>().Decriment(stats.stats[3] / modifier); //Deal the flat damage stat 
 			}
 		}
 	}

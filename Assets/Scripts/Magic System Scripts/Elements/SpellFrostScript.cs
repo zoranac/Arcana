@@ -8,7 +8,7 @@ public class SpellFrostScript : SpellParentScript {
 	public List<GameObject> enemiesInZone = new List<GameObject>();
 
 	void Start () {
-		Invoke ("Die", stats.duration); //Invoke the die function after however many seconds the duration stat is
+		Invoke ("Die", stats.stats[2]); //Invoke the die function after however many seconds the duration stat is
 		this.GetComponent<SpriteRenderer> ().color = Color.blue; //Change the color of the spell to blue. DEFAULT
 	}
 
@@ -18,7 +18,7 @@ public class SpellFrostScript : SpellParentScript {
 			if (enemiesDamaged.Contains(other.gameObject) == false) //Check if this enemy has been damaged by this spell before
 			{
 				enemiesDamaged.Add(other.gameObject); //If not, add it to the list of damaged enemies so none get hit multiple times
-				other.gameObject.GetComponent<HealthScript>().Decriment(stats.damage / 2f); //Deal the flat damage stat 
+				other.gameObject.GetComponent<HealthScript>().Decriment(stats.stats[3] / 2f); //Deal the flat damage stat 
 				CleanUp();
 			}
 			enemiesInZone.Add (other.gameObject); //If so, add them to the list of enemies in the zone
