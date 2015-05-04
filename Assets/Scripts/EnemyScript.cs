@@ -20,7 +20,8 @@ public class EnemyScript : MonoBehaviour {
 	public bool HitLeft;
 
 	public GameObject target;
-
+    public GameObject layout;
+    public float damage;
 	bool stuck = false;
 	public float speedMax = .025f; //ADDED
 	public float speedMin = .001f; //ADDED
@@ -37,6 +38,8 @@ public class EnemyScript : MonoBehaviour {
 	bool overlappingEnemy = false;
 	// Use this for initialization
 	void Start () {
+
+        layout = GameObject.Find("Health");
 
 	}
 	
@@ -56,6 +59,7 @@ public class EnemyScript : MonoBehaviour {
 				target = obj.gameObject;
 				speed = Random.Range((obj.transform.position - transform.position).magnitude*speedMin,(obj.transform.position - transform.position).magnitude*speedMax); //CHANGED
 			}
+
 		}
 		foreach (Collider2D obj in Physics2D.OverlapCircleAll(transform.position,AttackRange))
 		{
@@ -119,6 +123,9 @@ public class EnemyScript : MonoBehaviour {
 		float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
 		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		rigidbody2D.velocity = Vector2.zero;
+
+        target.gameObject.GetComponent<PlayerHealthScript>().Decriment(damage);
+        layout.gameObject.GetComponent<HealthBarFlash>().FlashBar();
 	}
 	void move(GameObject moveTarget)
 	{

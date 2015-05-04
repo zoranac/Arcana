@@ -101,44 +101,44 @@ public class MinigameScript : MonoBehaviour {
 		bool canPress = true;
 		if  (currentSpot > 0)
 		{
-			if (ButtonOrder[currentSpot-1] == ButtonOrder[currentSpot])
+			if (ButtonOrder[currentSpot-1].IsPressed) 
 			{
-				if (ButtonOrder[currentSpot-1].IsPressed) 
-				{
-					canPress = false;
-				}
-				else
-				{
-					canPress = true;
-				}
-			}
-		}
-		if (ButtonOrder[currentSpot].IsPressed)
-		{
-			if (canPress)
-			{
-				currentSpot++;
-			}
-		}
-		else if (inputDevice.AnyButton.IsPressed)
-		{
-			if  (currentSpot > 0)
-			{
-				if (!ButtonOrder[currentSpot-1].IsPressed) 
-				{
-					//Fail State
-					print ("failed :(");
-					gameObject.GetComponent<TextMesh>().text = "X";
-					EndMinigame();
-				}
+				canPress = false;
 			}
 			else
 			{
-				//Fail State
-				print ("failed :(");
-				gameObject.GetComponent<TextMesh>().text = "X";
-				EndMinigame();
+				canPress = true;
 			}
 		}
+        if (currentSpot < 5)
+        {
+            if (ButtonOrder[currentSpot].IsPressed)
+            {
+                if (canPress)
+                {
+                    currentSpot++;
+                }
+            }
+            else if (inputDevice.AnyButton.IsPressed)
+            {
+                if (currentSpot > 0)
+                {
+                    if (!ButtonOrder[currentSpot - 1].IsPressed)
+                    {
+                        //Fail State
+                        print("failed :(");
+                        gameObject.GetComponent<TextMesh>().text = "X";
+                        EndMinigame();
+                    }
+                }
+                else
+                {
+                    //Fail State
+                    print("failed :(");
+                    gameObject.GetComponent<TextMesh>().text = "X";
+                    EndMinigame();
+                }
+            }
+        }
 	}
 }

@@ -8,9 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: Factory
+  m_Name: InControl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23,12 +23,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11400002
+--- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -36,18 +36,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2edbb29d3abd62540a7e9c25762b7c7e, type: 3}
+  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 15
-  ChanceToSpawnChest: 0
-  ChanceToSpawnEnemy: .300000012
-  Chest: {fileID: 100000, guid: dc05516c375e2db4d95b703ffff39ba5, type: 2}
-  Enemy: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
-  Exit: {fileID: 0}
-  MaxEnemies: 30
-  MaxChests: 3
-  MaxExits: 0
+  logDebugInfo: 1
+  invertYAxis: 0
+  enableXInput: 0
+  useFixedUpdate: 0
+  dontDestroyOnLoad: 0
+  customProfiles: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

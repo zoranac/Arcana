@@ -127,7 +127,7 @@ public class PauseScript : MonoBehaviour {
 						menuSelection ("up");
 				else if (inputDevice.DPadDown.WasPressed) 
 						menuSelection ("down");
-				else if (inputDevice.Action1.WasPressed) 
+				else if (inputDevice.MenuWasPressed) 
 						ActivateButton ();
 				
 //>>>>>>> origin/master
@@ -166,45 +166,62 @@ public class PauseScript : MonoBehaviour {
 
 	void ActivateButton()
 	{
-		if (menuState == 0) {
-						if (index == 0)
-								PauseToggle ();
-						else if (index == 1)
-								ChangeMenu (1);
-						else if (index == 2)
-								Application.Quit();
-				} else if (menuState == 4) {
-						if (index == 0) {
-								myCaster.myCombos [oldComboIndex].InitializeValues (newCombo.shape, newCombo.element);
-								ChangeMenu (0);
-						} else if (index == 1) {
-								ChangeMenu (menuState - 1);
-						}
-				} else {
-						if (index < menus [menuState].Length - 1) {
-								switch (menuState) {
-								case 1:
-										oldComboIndex = index;
-										ChangeMenu (menuState + 1);
-										break;
-								case 2:
-										if (unlockedShapes [index] == true) {
-												newComboShape = index;
-												ChangeMenu (menuState + 1);
-										}
-										break;
-								case 3:
-										if (unlockedElements [index] == true) {
-												newComboElement = index;
-												newCombo.InitializeValues (newComboShape, newComboElement);
-												ChangeMenu (menuState + 1);
-										}
-										break;
-								}
-						} else {
-								ChangeMenu (menuState - 1);
-						}
-				}
+        if (!minigame)
+        {
+            if (menuState == 0)
+            {
+                if (index == 0)
+                    PauseToggle();
+                else if (index == 1)
+                    ChangeMenu(1);
+                else if (index == 2)
+                    Application.Quit();
+            }
+            else if (menuState == 4)
+            {
+                if (index == 0)
+                {
+                    myCaster.myCombos[oldComboIndex].InitializeValues(newCombo.shape, newCombo.element);
+                    ChangeMenu(0);
+                }
+                else if (index == 1)
+                {
+                    ChangeMenu(menuState - 1);
+                }
+            }
+            else
+            {
+                if (index < menus[menuState].Length - 1)
+                {
+                    switch (menuState)
+                    {
+                        case 1:
+                            oldComboIndex = index;
+                            ChangeMenu(menuState + 1);
+                            break;
+                        case 2:
+                            if (unlockedShapes[index] == true)
+                            {
+                                newComboShape = index;
+                                ChangeMenu(menuState + 1);
+                            }
+                            break;
+                        case 3:
+                            if (unlockedElements[index] == true)
+                            {
+                                newComboElement = index;
+                                newCombo.InitializeValues(newComboShape, newComboElement);
+                                ChangeMenu(menuState + 1);
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    ChangeMenu(menuState - 1);
+                }
+            }
+        }
 			
 	}
 

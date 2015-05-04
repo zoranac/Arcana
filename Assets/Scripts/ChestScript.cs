@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TowerDoor : MonoBehaviour {
+public class ChestScript : MonoBehaviour {
+
+    public int coinMin;
+
+    public int coinMax;
+
+    public int contents;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +23,11 @@ public class TowerDoor : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            Application.LoadLevel(2);
+
+            contents = Random.Range(coinMin, coinMax);
+
+            GlobalControl.globalControl.coins += contents;
+            Destroy(gameObject);
         }
 
     }
