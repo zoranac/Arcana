@@ -113,7 +113,7 @@ public class PauseScript : MonoBehaviour {
 		InputDevice inputDevice = InputManager.ActiveDevice;
 		if (inputDevice.MenuWasPressed) 
 						PauseToggle ();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 		if (paused) {
 						if (inputDevice.DPadUp.WasPressed) 
 								menuSelection ("up");
@@ -122,7 +122,7 @@ public class PauseScript : MonoBehaviour {
 						else if (inputDevice.Action1.WasPressed) 
 								ActivateButton ();
 				}
-=======
+//=======
 				else if (inputDevice.DPadUp.WasPressed) 
 						menuSelection ("up");
 				else if (inputDevice.DPadDown.WasPressed) 
@@ -130,7 +130,7 @@ public class PauseScript : MonoBehaviour {
 				else if (inputDevice.Action1.WasPressed) 
 						ActivateButton ();
 				
->>>>>>> origin/master
+//>>>>>>> origin/master
 	}
 
 	void PauseToggle()

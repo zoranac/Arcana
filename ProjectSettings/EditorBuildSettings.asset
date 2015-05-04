@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OutsideWhiteBox.unity
+    path: Assets/Town.unity
   - enabled: 1
-    path: Assets/TowerWhitebox.unity
+    path: Assets/Arena.unity
