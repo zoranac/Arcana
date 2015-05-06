@@ -8,15 +8,13 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 212: {fileID: 21200000}
   - 50: {fileID: 5000000}
-  - 114: {fileID: 11400004}
-  - 114: {fileID: 11400002}
+  - 61: {fileID: 6100000}
+  - 212: {fileID: 21200000}
   - 114: {fileID: 11400000}
-  - 58: {fileID: 5800000}
-  m_Layer: 8
-  m_Name: Enemy2
-  m_TagString: Enemy
+  m_Layer: 0
+  m_Name: EnemyShot
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,8 +26,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .458458453, y: 5.69660091, z: 0}
-  m_LocalScale: {x: 2.53534651, y: 2.53534651, z: 2.53534651}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -40,24 +38,24 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Mass: 1
-  m_LinearDrag: 2
-  m_AngularDrag: 2
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
   m_GravityScale: 0
-  m_FixedAngle: 1
+  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
---- !u!58 &5800000
-CircleCollider2D:
+--- !u!61 &6100000
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Radius: .140000001
+  m_IsTrigger: 1
+  m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -67,45 +65,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21bee035f31c6d49aceac92675f7451, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bdb079a6e1d98c4aa6c99ed90e34721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca981588c340eb4c8ee62b5f847d22d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SightRange: 20
-  AttackRange: .75
-  CollisionSpacerRange: .100000001
-  HitTop: 0
-  HitBottom: 0
-  HitRight: 0
-  HitLeft: 0
-  target: {fileID: 0}
-  layout: {fileID: 0}
-  damage: .5
-  speedMax: .0700000003
-  speedMin: .00100000005
-  slowed: 0
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75798de7ab9ef9e4bb4890626777eece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 30
+  Speed: 7
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -125,9 +88,9 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 9e2a1a3924635bb409ceeb52b1fdc58c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 1d39a7b2bb459ea40800626bc0993658, type: 3}
+  m_Color: {r: 1, g: .404411793, b: .404411793, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
