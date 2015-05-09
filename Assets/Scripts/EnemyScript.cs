@@ -23,6 +23,7 @@ public class EnemyScript : MonoBehaviour {
 	public Vector3 targetPos = Vector3.zero;
     public GameObject layout;
     public float damage;
+    public float rangeDamage;
 	bool stuck = false;
 	public float speedMax = .025f; //ADDED
 	public float speedMin = .001f; //ADDED
@@ -191,7 +192,8 @@ public class EnemyScript : MonoBehaviour {
 			if (Time.time >= shotTime + ShotInterval)
 			{
 				GameObject temp = (GameObject)Instantiate(RangedShotPrefab,transform.position,transform.rotation);
-				temp.GetComponent<EnemyShotScript>().SetDamage(damage);
+                //Setting Damage to a seperate public variable- shouldn't be the same as melee damage since melee damage is incurred much more frequently.
+				temp.GetComponent<EnemyShotScript>().SetDamage(rangeDamage);
 				shotTime = Time.time;
 			}
 		}

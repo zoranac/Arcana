@@ -8,11 +8,21 @@ public class SpawnerScript : MonoBehaviour {
 	public float ChanceToSpawnChest;
 	public float ChanceToSpawnEnemy;
 	public GameObject Chest;
+
+    //Common Enemy (50%)
 	public GameObject Enemy;
+    //Common Enemy (40%)
+    public GameObject Enemy2;
+    //Rare Enemy  (9%)
+    public GameObject Enemy3;
+    //Special Enemy (1%)
+    public GameObject EnemySpec;
+
 	public GameObject Exit;
 	public int MaxEnemies;
 	public int MaxChests;
 	public int MaxExits;
+
 	// Use this for initialization
 	void Start () {
 		ChanceToSpawnChest = ChanceToSpawnChest/100;
@@ -63,8 +73,21 @@ public class SpawnerScript : MonoBehaviour {
 					break;
 				}
 			}
-			if (spawn)
-				Instantiate(Enemy,spawnPoint,transform.rotation);
+            if (spawn)
+            {
+                rand = Random.Range(0, 100);
+
+                if (rand == 100)
+                Instantiate(Enemy3, spawnPoint, transform.rotation);
+                else if (rand > 90)
+                Instantiate(Enemy3, spawnPoint, transform.rotation);
+                else if (rand > 50)
+                Instantiate(Enemy2, spawnPoint, transform.rotation);
+                else if (rand >= 0)
+                Instantiate(Enemy, spawnPoint, transform.rotation);
+
+                
+            }
 		}
 	}
 }

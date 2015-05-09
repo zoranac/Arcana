@@ -70,7 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75798de7ab9ef9e4bb4890626777eece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 30
+  statManager: {fileID: 0}
+  HP: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,11 +91,16 @@ MonoBehaviour:
   HitRight: 0
   HitLeft: 0
   target: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   layout: {fileID: 0}
   damage: .5
-  speedMax: .0500000007
-  speedMin: .00100000005
+  rangeDamage: 0
+  speedMax: .0399999991
+  speedMin: .00499999989
   slowed: 0
+  Ranged: 0
+  ShotInterval: 0
+  RangedShotPrefab: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,7 +132,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 9e2a1a3924635bb409ceeb52b1fdc58c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a56eb1b5135f3d4281f11e8dcaf7312, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

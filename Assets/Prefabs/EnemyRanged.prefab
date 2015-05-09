@@ -92,6 +92,7 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   layout: {fileID: 0}
   damage: .5
+  rangeDamage: 10
   speedMax: .00800000038
   speedMin: .00079999998
   slowed: 0
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75798de7ab9ef9e4bb4890626777eece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 30
+  HP: 6
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

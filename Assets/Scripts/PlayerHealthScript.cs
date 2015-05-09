@@ -6,6 +6,7 @@ public class PlayerHealthScript : MonoBehaviour {
     public GameObject statManager;
 	public float HP = 100; //Health of the player
 	public int minimumDeathPrice = 20; //Minimum price player can have for resurrecting
+
 	
     public void Start()
     {
@@ -30,7 +31,9 @@ public class PlayerHealthScript : MonoBehaviour {
 		int deduction = GlobalControl.globalControl.coins / 10;
 		if (deduction < minimumDeathPrice)
 						deduction = minimumDeathPrice;
-		GlobalControl.globalControl.coins -= deduction;
+		GlobalControl.globalControl.coffinCoins = GlobalControl.globalControl.coins - deduction;
+
+        GlobalControl.globalControl.coins = 0;
 		Application.LoadLevel (0);
 	}
 }

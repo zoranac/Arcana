@@ -3,7 +3,15 @@ using System.Collections;
 
 public class HealthScript : MonoBehaviour {
 
+    public GameObject statManager;
+
 	public float HP = 10; //Health of the enemy
+
+
+    public void Start()
+    {
+        statManager = GameObject.Find("StatManager");
+    }
 
 	//Function to inflict damage
 	//Used for any logic like armor or conditional health decrimenting
@@ -15,9 +23,10 @@ public class HealthScript : MonoBehaviour {
 				}
 	}
 
-	void Die()
+	public void Die()
 	{
 		GlobalControl.globalControl.Kills++;
+        statManager.GetComponent<StatManager>().Special(10);
 		GlobalControl.globalControl.coins += Random.Range (1, 2); //Gives coins on enemy death
 		Destroy (this.gameObject); //Destroy the enemy
 	}

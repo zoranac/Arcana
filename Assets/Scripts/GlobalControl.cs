@@ -4,6 +4,7 @@ using System.Collections;
 public class GlobalControl : MonoBehaviour {
 	public static GlobalControl globalControl;
 	public int coins;
+    public int coffinCoins;
 	public int KillsToStartMinigame = 20;
 	public int Kills = 0;
 	public SpellcastStats stats;
@@ -22,4 +23,9 @@ public class GlobalControl : MonoBehaviour {
 		}else
 			Destroy(gameObject);
 	}
+
+    void Start()
+    {
+        Kills = 0;
+    }
 }

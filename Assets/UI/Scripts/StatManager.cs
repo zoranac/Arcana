@@ -25,12 +25,13 @@ public class StatManager : MonoBehaviour {
 
 		//set health to maxhealth value
         health = maxHealth;
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//update guitext with coin count
-		coinCount.text = ("x" + coins.ToString ());
+		coinCount.text = ("x" + GlobalControl.globalControl.coins.ToString ());
 		//update healthbar with health count
 		healthBar.pixelInset = new Rect (-105, -10, health, 20);
 		//update specialbar with special count

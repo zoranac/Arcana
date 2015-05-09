@@ -4,6 +4,11 @@ using InControl;
 
 public class MinigameScript : MonoBehaviour {
 	public GameObject Player;
+
+    //Black Hole to next floor, might have to just set it manually in-window for now
+    public GameObject BlackHole;
+    public GameObject[] GuysToBreak;
+
 	public float ShowTimeDurationInFrames;
 	InputControl[] ButtonOrder = new InputControl[5];
 	InputDevice inputDevice;
@@ -38,6 +43,14 @@ public class MinigameScript : MonoBehaviour {
 			{
 				//success
 				print ("success!");
+                GuysToBreak = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject guy in GuysToBreak)
+                {
+                    Destroy(guy.gameObject);
+                }
+                BlackHole.gameObject.SetActive(true);
+
+
 				gameObject.GetComponent<TextMesh>().text = "O";
 				EndMinigame();
 			}

@@ -276,9 +276,10 @@ MonoBehaviour:
   ChanceToSpawnChest: 0
   ChanceToSpawnEnemy: .300000012
   Chest: {fileID: 100000, guid: dc05516c375e2db4d95b703ffff39ba5, type: 2}
-  Enemy: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
+  Enemy: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
   Enemy2: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
-  Enemy3: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
+  Enemy3: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
+  EnemySpec: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
   Exit: {fileID: 0}
   MaxEnemies: 30
   MaxChests: 3
@@ -3671,7 +3672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coins: 0
   coffinCoins: 0
-  KillsToStartMinigame: 0
+  KillsToStartMinigame: 20
   Kills: 0
 --- !u!4 &1856381068
 Transform:
@@ -3995,7 +3996,7 @@ Prefab:
     - target: {fileID: 11400002, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
       propertyPath: Enemy
       value: 
-      objectReference: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
+      objectReference: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
     - target: {fileID: 11400002, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
       propertyPath: Enemy2
       value: 
@@ -4003,7 +4004,11 @@ Prefab:
     - target: {fileID: 11400002, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
       propertyPath: Enemy3
       value: 
-      objectReference: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
+      objectReference: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
+    - target: {fileID: 11400002, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
+      propertyPath: EnemySpec
+      value: 
+      objectReference: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
   m_RootGameObject: {fileID: 184197738}

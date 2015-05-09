@@ -69,7 +69,7 @@ public class ShopScript : MonoBehaviour {
 		purchaseIndex = new int[]{0, 0};
 		
 		headerRect = new Rect(0, Screen.height - 100f, Screen.width, 100f);
-		headerText = "I AM ERROR";
+		headerText = "You broke, kid? Try the funeral home; latest stiff might still have some scraps on him.";
 		purchaseString = string.Empty;
 	}
 	
