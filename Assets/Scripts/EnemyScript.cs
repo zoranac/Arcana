@@ -52,7 +52,7 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () { //CHANGED
-		speed = Random.Range(.01f,.03f);
+		speed = Random.Range(speedMin,speedMax);
 		playerInSightRange = false;
 		playerInAttackRange = false;
 		overlappingEnemy = false;
@@ -220,7 +220,8 @@ public class EnemyScript : MonoBehaviour {
 				float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
 				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-				transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
+				transform.position = Vector3.MoveTowards(transform.position, targetPos, speed);
+
 			}
 		}
 	}

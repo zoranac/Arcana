@@ -83,7 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SightRange: 20
   AttackRange: 4
-  CollisionSpacerRange: .449999988
+  CollisionSpacerRange: .150000006
   HitTop: 0
   HitBottom: 0
   HitRight: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   damage: .5
   rangeDamage: 10
   speedMax: .00800000038
-  speedMin: .00079999998
+  speedMin: .00499999989
   slowed: 0
   Ranged: 1
   ShotInterval: 2
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75798de7ab9ef9e4bb4890626777eece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statManager: {fileID: 0}
   HP: 6
 --- !u!212 &21200000
 SpriteRenderer:

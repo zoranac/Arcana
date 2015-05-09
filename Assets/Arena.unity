@@ -279,6 +279,7 @@ MonoBehaviour:
   Enemy: {fileID: 100000, guid: 409e95395392927408504d542a72cd48, type: 2}
   Enemy2: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
   Enemy3: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
+  EnemySpec: {fileID: 0}
   Exit: {fileID: 0}
   MaxEnemies: 30
   MaxChests: 3

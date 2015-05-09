@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statManager: {fileID: 0}
-  HP: 1
+  HP: 10
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,7 +96,7 @@ MonoBehaviour:
   damage: .5
   rangeDamage: 0
   speedMax: .0399999991
-  speedMin: .00499999989
+  speedMin: .0199999996
   slowed: 0
   Ranged: 0
   ShotInterval: 0
