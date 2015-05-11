@@ -13,6 +13,9 @@ public class CoffinScript : MonoBehaviour {
 
         deadMoney = GlobalControl.globalControl.coffinCoins;
 
+        if (deadMoney < 0)
+            deadMoney = 2;
+
         looted = false;
 	
 	}

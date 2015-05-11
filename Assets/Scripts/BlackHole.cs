@@ -3,10 +3,15 @@ using System.Collections;
 
 public class BlackHole : MonoBehaviour {
 
+
+    public int level;
+
 	// Use this for initialization
 	void Start () {
 
         gameObject.SetActive(false);
+
+        
 
 	}
 	
@@ -19,8 +24,37 @@ public class BlackHole : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            //Takes you to the menu for now, later will move player to next area!
-            Application.LoadLevel(0);
+            switch (level)
+            {
+                case 0:
+                    Application.LoadLevel(0);
+                    break;
+
+                case 1:
+
+                    Application.LoadLevel(3);
+
+                    break;
+
+                case 2:
+
+                    Application.LoadLevel(4);
+
+                    break;
+
+
+                case 3:
+
+                    Application.LoadLevel(5);
+
+                    break;
+
+                case 4:
+
+                    Application.LoadLevel(0);
+
+                    break;
+            }
         }
 
     }

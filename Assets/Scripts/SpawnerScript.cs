@@ -77,8 +77,8 @@ public class SpawnerScript : MonoBehaviour {
             {
                 rand = Random.Range(0, 100);
 
-                if (rand == 100)
-                Instantiate(Enemy3, spawnPoint, transform.rotation);
+                if (rand > 99)
+                Instantiate(EnemySpec, spawnPoint, transform.rotation);
                 else if (rand > 90)
                 Instantiate(Enemy3, spawnPoint, transform.rotation);
                 else if (rand > 50)

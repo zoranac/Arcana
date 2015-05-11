@@ -8,7 +8,7 @@ public class StatManager : MonoBehaviour {
 	public int coins = 0;
 
 	float maxHealth;
-	float maxSpecial;
+	public float maxSpecial;
 
 	public GUIText coinCount;
 	public GUITexture healthBar;

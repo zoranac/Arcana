@@ -10,12 +10,12 @@ GameObject:
   - 4: {fileID: 400000}
   - 212: {fileID: 21200000}
   - 50: {fileID: 5000000}
-  - 114: {fileID: 11400004}
-  - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400004}
   - 58: {fileID: 5800000}
   m_Layer: 8
-  m_Name: EnemyRanged
+  m_Name: EnemyCursed
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .458458453, y: 5.69660091, z: 0}
-  m_LocalScale: {x: 2.53534651, y: 2.53534651, z: 2.53534651}
+  m_LocalPosition: {x: 5.64928198, y: -13.2105503, z: 0}
+  m_LocalScale: {x: 5.28473806, y: 5.28473806, z: 5.28473806}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!50 &5000000
@@ -66,9 +66,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21bee035f31c6d49aceac92675f7451, type: 3}
+  m_Script: {fileID: 11500000, guid: 75798de7ab9ef9e4bb4890626777eece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statManager: {fileID: 0}
+  globalControl: {fileID: 0}
+  HP: 50
+  specialInc: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SightRange: 20
-  AttackRange: 4
+  AttackRange: 10
   CollisionSpacerRange: .150000006
   HitTop: 0
   HitBottom: 0
@@ -91,12 +95,12 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   layout: {fileID: 0}
   damage: .5
-  rangeDamage: 10
+  rangeDamage: 30
   speedMax: .00800000038
   speedMin: .00499999989
   slowed: 0
   Ranged: 1
-  ShotInterval: .5
+  ShotInterval: .200000003
   RangedShotPrefab: {fileID: 100000, guid: 3b87e8a853a1f50459af3bffe383dd54, type: 2}
 --- !u!114 &11400004
 MonoBehaviour:
@@ -106,11 +110,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75798de7ab9ef9e4bb4890626777eece, type: 3}
+  m_Script: {fileID: 11500000, guid: e21bee035f31c6d49aceac92675f7451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statManager: {fileID: 0}
-  HP: 10
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,7 +134,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 9e2a1a3924635bb409ceeb52b1fdc58c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a02f4126190d9e944aea7c7f8035672f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

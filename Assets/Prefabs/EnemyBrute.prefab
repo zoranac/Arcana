@@ -9,13 +9,13 @@ GameObject:
   m_Component:
   - 4: {fileID: 400000}
   - 212: {fileID: 21200000}
+  - 61: {fileID: 6100000}
   - 50: {fileID: 5000000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
-  - 58: {fileID: 5800000}
   m_Layer: 8
-  m_Name: EnemyRanged
+  m_Name: EnemyBrute
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .458458453, y: 5.69660091, z: 0}
-  m_LocalScale: {x: 2.53534651, y: 2.53534651, z: 2.53534651}
+  m_LocalPosition: {x: -4.38258266, y: -8.07445526, z: 0}
+  m_LocalScale: {x: 6.0141387, y: 6.0141325, z: 1.30887294}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!50 &5000000
@@ -47,8 +47,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
---- !u!58 &5800000
-CircleCollider2D:
+--- !u!61 &6100000
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -56,7 +56,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Radius: .140000001
+  m_Size: {x: .239999995, y: .239999995}
   m_Center: {x: 0, y: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -81,8 +81,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SightRange: 20
-  AttackRange: 4
-  CollisionSpacerRange: .150000006
+  AttackRange: .75
+  CollisionSpacerRange: .100000001
   HitTop: 0
   HitBottom: 0
   HitRight: 0
@@ -90,14 +90,14 @@ MonoBehaviour:
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   layout: {fileID: 0}
-  damage: .5
-  rangeDamage: 10
-  speedMax: .00800000038
-  speedMin: .00499999989
+  damage: 1.5
+  rangeDamage: 0
+  speedMax: .100000001
+  speedMin: .0399999991
   slowed: 0
-  Ranged: 1
-  ShotInterval: .5
-  RangedShotPrefab: {fileID: 100000, guid: 3b87e8a853a1f50459af3bffe383dd54, type: 2}
+  Ranged: 0
+  ShotInterval: 0
+  RangedShotPrefab: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statManager: {fileID: 0}
-  HP: 10
+  HP: 30
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 9e2a1a3924635bb409ceeb52b1fdc58c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c1454281a366d34e8bea9a7775f7950, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
