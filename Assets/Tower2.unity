@@ -192,8 +192,8 @@ MonoBehaviour:
   Enemy3: {fileID: 100000, guid: cd9ff01204cf8b94583214c38242ac5c, type: 2}
   EnemySpec: {fileID: 100000, guid: 10517b1fa0d9f72419a9cea1e37b4d26, type: 2}
   Exit: {fileID: 0}
-  MaxEnemies: 200
-  MaxChests: 3
+  MaxEnemies: 20
+  MaxChests: 5
   MaxExits: 0
 --- !u!4 &184197740
 Transform:
@@ -3951,7 +3951,11 @@ Prefab:
       objectReference: {fileID: 100000, guid: 10517b1fa0d9f72419a9cea1e37b4d26, type: 2}
     - target: {fileID: 11400002, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
       propertyPath: MaxEnemies
-      value: 200
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
+      propertyPath: MaxChests
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 86cda0924c8a91447ab0c4cb3607ffaf, type: 2}
