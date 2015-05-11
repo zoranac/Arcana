@@ -78,17 +78,35 @@ public class MinigameScript : MonoBehaviour {
 		showedOrder = false;
 		Player.GetComponent<PauseScript>().Pause();
 		running = true;
+		InputControl lastInput = null;
 		for (int i = 0; i < 5; i++)
 		{
-			int rand = Random.Range(0,4);
-			if (rand == 0)
-				ButtonOrder[i] = inputDevice.Action1;
-			if (rand == 1)
-				ButtonOrder[i] = inputDevice.Action2;
-			if (rand == 2)
-				ButtonOrder[i] = inputDevice.Action3;
-			if (rand == 3)
-				ButtonOrder[i] = inputDevice.Action4;
+			if (i > 0)
+			{
+				do{
+					int rand = Random.Range(0,4);
+					if (rand == 0)
+						ButtonOrder[i] = inputDevice.Action1;
+					if (rand == 1)
+						ButtonOrder[i] = inputDevice.Action2;
+					if (rand == 2)
+						ButtonOrder[i] = inputDevice.Action3;
+					if (rand == 3)
+						ButtonOrder[i] = inputDevice.Action4;
+				}while (ButtonOrder[i] == lastInput);
+			}
+			else{
+				int rand = Random.Range(0,4);
+				if (rand == 0)
+					ButtonOrder[i] = inputDevice.Action1;
+				if (rand == 1)
+					ButtonOrder[i] = inputDevice.Action2;
+				if (rand == 2)
+					ButtonOrder[i] = inputDevice.Action3;
+				if (rand == 3)
+					ButtonOrder[i] = inputDevice.Action4;
+			}
+			lastInput = ButtonOrder[i];
 		}
 		showtime = UpdateTimer;
 	}
