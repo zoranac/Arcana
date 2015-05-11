@@ -11,3 +11,9 @@ EditorBuildSettings:
     path: Assets/Town.unity
   - enabled: 1
     path: Assets/Tower1.unity
+  - enabled: 1
+    path: Assets/Tower2.unity
+  - enabled: 1
+    path: Assets/Tower3.unity
+  - enabled: 1
+    path: Assets/Tower4.unity

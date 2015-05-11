@@ -10,12 +10,16 @@ public class HealthScript : MonoBehaviour {
 
     public float specialInc; //The incriment by which the enemy's death increases the special bar.
 
+    public int killNum;
 
     public void Start()
     {
         statManager = GameObject.Find("StatManager");
         globalControl = GameObject.Find("GlobalControl");
-        specialInc = 210 / globalControl.GetComponent<GlobalControl>().KillsToStartMinigame;
+
+        killNum = globalControl.GetComponent<GlobalControl>().KillsToStartMinigame;
+
+        specialInc = 210 / killNum;
 
 
     }

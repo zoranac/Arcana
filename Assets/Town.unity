@@ -1528,6 +1528,7 @@ MonoBehaviour:
   health: 100
   special: 0
   coins: 0
+  maxSpecial: 0
   coinCount: {fileID: 1238396428}
   healthBar: {fileID: 1746077886}
   specialBar: {fileID: 19631152}
@@ -2263,7 +2264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coins: 0
   coffinCoins: 150
-  KillsToStartMinigame: 0
+  KillsToStartMinigame: 50
   Kills: 0
 --- !u!4 &1694114104
 Transform:
