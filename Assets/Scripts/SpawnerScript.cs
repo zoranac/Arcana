@@ -30,7 +30,7 @@ public class SpawnerScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		angle += ((Mathf.PI * 2)/24);
 		if (angle>=(Mathf.PI * 2))
 		{

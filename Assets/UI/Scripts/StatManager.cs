@@ -95,4 +95,8 @@ public class StatManager : MonoBehaviour {
 		}
 	}
 
+    public void SpecialReset()
+    {
+        special = 0;
+    }
 }

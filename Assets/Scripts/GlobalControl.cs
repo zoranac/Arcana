@@ -9,6 +9,8 @@ public class GlobalControl : MonoBehaviour {
 	public int Kills = 0;
 	public SpellcastStats stats;
 
+    public GameObject player;
+
 	void Awake () {
 		if(!globalControl) {
 			//Initialize globalcontrol
@@ -27,5 +29,7 @@ public class GlobalControl : MonoBehaviour {
     void Start()
     {
         Kills = 0;
+        player = GameObject.Find("Player");
+        KillsToStartMinigame = player.GetComponent<GoalSetter>().targetKills;
     }
 }

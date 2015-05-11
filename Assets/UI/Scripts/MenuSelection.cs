@@ -9,6 +9,8 @@ public class MenuSelection : MonoBehaviour {
 	public AudioClip clip2;
 	public AudioClip clip3;
 
+    GameObject names;
+
 	bool inSubMenu = false;
 	//public AnimationClip inClip;
 	//public AnimationClip outClip;
@@ -17,6 +19,7 @@ public class MenuSelection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//anim = animationMaster.GetComponent<Animator> ();
+        names = GameObject.Find("Names");
 	}
 	
 	// Update is called once per frame
@@ -58,6 +61,7 @@ public class MenuSelection : MonoBehaviour {
 			GameObject.Find("New Game").GetComponent<Highlight>()._Highlight();
 			GameObject.Find("Options").GetComponent<Highlight>().Unhighlight();
 			GameObject.Find("Credits").GetComponent<Highlight>().Unhighlight();
+           // names.SetActive(false);
             if (InputManager.ActiveDevice.Action1.WasPressed )
             {
 				//play sound effect
@@ -74,12 +78,14 @@ public class MenuSelection : MonoBehaviour {
 			GameObject.Find("New Game").GetComponent<Highlight>().Unhighlight();
 			GameObject.Find("Options").GetComponent<Highlight>()._Highlight();
 			GameObject.Find("Credits").GetComponent<Highlight>().Unhighlight();
+           // names.SetActive(false);
             if (InputManager.ActiveDevice.Action1.WasPressed)
             {
 				//play sound effect
 				audio.PlayOneShot(clip2);
 				//show options
 				print ("Show Options");
+               
 				//inSubMenu = true;
 			}
 			break;
@@ -94,7 +100,7 @@ public class MenuSelection : MonoBehaviour {
 				//play sound effect
 				audio.PlayOneShot(clip2);
 				//show credits
-				print ("Show Credits");
+                //names.SetActive(true);
 				//inSubMenu = true;
 			}
 			break;

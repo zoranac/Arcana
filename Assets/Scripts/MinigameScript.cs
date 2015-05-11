@@ -8,6 +8,7 @@ public class MinigameScript : MonoBehaviour {
     //Black Hole to next floor, might have to just set it manually in-window for now
     public GameObject BlackHole;
     public GameObject[] GuysToBreak;
+    public GameObject statManager;
 
 	public float ShowTimeDurationInFrames;
 	InputControl[] ButtonOrder = new InputControl[5];
@@ -22,6 +23,8 @@ public class MinigameScript : MonoBehaviour {
 	void Start () {
 		Player = transform.parent.gameObject;
 		inputDevice = InputManager.ActiveDevice;
+
+        statManager = GameObject.Find("StatManager");
 	}
 	
 	// Update is called once per frame
@@ -71,6 +74,11 @@ public class MinigameScript : MonoBehaviour {
 		UpdateTimer = 0f;
 		gameObject.GetComponent<TextMesh>().text = "";
 		Player.GetComponent<PauseScript>().UnPause();
+
+        //Reset Kills
+        GlobalControl.globalControl.Kills = 0;
+        statManager.GetComponent<StatManager>().SpecialReset();
+
 	}
 	public void Setup()
 	{

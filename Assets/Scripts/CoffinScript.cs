@@ -8,6 +8,8 @@ public class CoffinScript : MonoBehaviour {
 
     public bool looted;
 
+    public bool showingMessage;
+
 	// Use this for initialization
 	void Start () {
 
@@ -17,15 +19,25 @@ public class CoffinScript : MonoBehaviour {
             deadMoney = 2;
 
         looted = false;
+        showingMessage = false;
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-
-	
-	}
+	void OnGUI()
+    {
+        if (showingMessage)
+        {
+            if (deadMoney == 2)
+            {
+                GUI.Box(new Rect(0, Screen.height - 100f, Screen.width, 100f), "This man has been picked clean- only some magical runes remain, along with the coins on his eyes. You take them anyway.");
+            }
+            
+            else
+            {
+                GUI.Box(new Rect(0, Screen.height - 100f, Screen.width, 100f), "The coffin holds a strangely familiar corpse. You find " + deadMoney + " coins as well as some magical runes...");
+            }
+        } 
+    }
 
     void OnCollisionStay2D(Collision2D col)
     {
@@ -33,13 +45,19 @@ public class CoffinScript : MonoBehaviour {
         if (col.gameObject.tag == "Player" && inputDevice.Action1.WasPressed && looted == false)
         {
             GlobalControl.globalControl.coins = deadMoney;
-
+           
         
 
             looted = true;
+            showingMessage = true;
+            Invoke("CancelMessage", 5f);
 
-            //OUTPUT SHOULD INFORM PLAYER THAT THEY FOUND MONEY IN THE COFFIN!
-            Debug.Log("The coffin holds a strangely familiar corpse. You find " + deadMoney + " coins as well as some magical runes...");
         }
+    }
+
+    void CancelMessage()
+    {
+        showingMessage = false;
+        deadMoney = 0;
     }
 }

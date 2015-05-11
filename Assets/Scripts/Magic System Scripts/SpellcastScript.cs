@@ -26,7 +26,7 @@ public class SpellcastScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		InputDevice inputDevice = InputManager.ActiveDevice;
 		
 		//Select what spell is active

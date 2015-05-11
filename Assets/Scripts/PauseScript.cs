@@ -19,6 +19,7 @@ public class PauseScript : MonoBehaviour {
 	private int newComboElement;
 	private SpellCombo newCombo;
 	private bool minigame;
+    private string[] controlPreface = new string[] { "LB ", "RB ", "LT ", "RT " };
 
 	public void Pause()
 	{
@@ -45,10 +46,10 @@ public class PauseScript : MonoBehaviour {
 		menus [0] [1] = new GUIButton ("mainSpellbook", "Spellbook");
 		menus [0] [2] = new GUIButton ("mainQuit", "Quit");
 		menus[1] = new GUIButton[5];
-		menus [1] [0] = new GUIButton ("combo0", string.Empty);
-		menus [1] [1] = new GUIButton ("combo1", string.Empty);
-		menus [1] [2] = new GUIButton ("combo2", string.Empty);
-		menus [1] [3] = new GUIButton ("combo3", string.Empty);
+        menus[1][0] = new GUIButton("combo0", string.Empty);
+        menus[1][1] = new GUIButton("combo1", string.Empty);
+        menus[1][2] = new GUIButton("combo2", string.Empty);
+        menus[1][3] = new GUIButton("combo3", string.Empty);
 		menus [1] [4] = new GUIButton ("comboBack", "Back");
 		menus[2] = new GUIButton[4];
 		menus [2] [0] = new GUIButton ("shape0", "Circle");
@@ -122,14 +123,6 @@ public class PauseScript : MonoBehaviour {
 						else if (inputDevice.Action1.WasPressed) 
 								ActivateButton ();
 				}
-//=======
-				else if (inputDevice.DPadUp.WasPressed) 
-						menuSelection ("up");
-				else if (inputDevice.DPadDown.WasPressed) 
-						menuSelection ("down");
-				else if (inputDevice.MenuWasPressed) 
-						ActivateButton ();
-				
 //>>>>>>> origin/master
 	}
 
@@ -238,7 +231,7 @@ public class PauseScript : MonoBehaviour {
 						headerText = "Select combo to replace";
 						for (int ii = 0; ii < menus[menuState].Length - 1; ii++) {
 								SpellCombo comboHandle = myCaster.myCombos [ii];
-								menus [menuState] [ii].text = comboHandle.shapeString + " " + comboHandle.elementString;
+								menus [menuState] [ii].text = controlPreface[ii] + comboHandle.shapeString + " " + comboHandle.elementString;
 						}
 						break;
 				case 2:

@@ -51,7 +51,7 @@ public class BlackHole : MonoBehaviour {
 
                 case 4:
 
-                    Application.LoadLevel(0);
+                    Application.LoadLevel(1);
 
                     break;
             }

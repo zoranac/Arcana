@@ -31,7 +31,7 @@ public class PlayerHealthScript : MonoBehaviour {
 		int deduction = GlobalControl.globalControl.coins / 10;
 		if (deduction < minimumDeathPrice)
 						deduction = minimumDeathPrice;
-		GlobalControl.globalControl.coffinCoins = GlobalControl.globalControl.coins - deduction;
+		GlobalControl.globalControl.coffinCoins += GlobalControl.globalControl.coins - deduction;
 
         GlobalControl.globalControl.coins = 0;
 		Application.LoadLevel (0);
