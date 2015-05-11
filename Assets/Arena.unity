@@ -1629,6 +1629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efdb8af4b845ed246a6b810e44aa7911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
 --- !u!1 &790061127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,6 +1869,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   BlackHole: {fileID: 777959659}
   GuysToBreak: []
+  statManager: {fileID: 0}
   ShowTimeDurationInFrames: 50
 --- !u!1 &856600783
 GameObject:
@@ -3674,6 +3676,7 @@ MonoBehaviour:
   coffinCoins: 0
   KillsToStartMinigame: 0
   Kills: 0
+  player: {fileID: 0}
 --- !u!4 &1856381068
 Transform:
   m_ObjectHideFlags: 0
@@ -3949,6 +3952,7 @@ MonoBehaviour:
   health: 100
   special: 0
   coins: 0
+  maxSpecial: 0
   coinCount: {fileID: 2080467164}
   healthBar: {fileID: 237424551}
   specialBar: {fileID: 1731766313}

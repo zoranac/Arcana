@@ -19,7 +19,7 @@ public class HealthScript : MonoBehaviour {
 
         killNum = globalControl.GetComponent<GlobalControl>().KillsToStartMinigame;
 
-        specialInc = 210 / killNum;
+        specialInc = 211 / (killNum + 1);
 
 
     }
@@ -28,6 +28,10 @@ public class HealthScript : MonoBehaviour {
 	//Used for any logic like armor or conditional health decrimenting
 	public void Decriment(float damage)
 	{
+		if (gameObject.tag == "Enemy")
+		{
+			gameObject.GetComponent<EnemyScript>().FleeTest(HP);
+		}
 		HP -= damage; //Subtract damage from health
 		if (HP <= 0) { //If the health is at or below zero
 						Die ();

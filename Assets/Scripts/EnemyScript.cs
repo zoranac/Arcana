@@ -33,12 +33,15 @@ public class EnemyScript : MonoBehaviour {
 	public float ShotInterval = 0;
 	float shotTime = 0;
 	public GameObject RangedShotPrefab;
+	bool flee = false;
+	public float CriticalHP;
 	enum State
 	{
 		Idle,
 		Moving,
 		Wander,
-		Attacking
+		Attacking,
+		Fleeing
 	}
 
 	State currentState = State.Idle;
@@ -137,7 +140,16 @@ public class EnemyScript : MonoBehaviour {
 //			//currentState = State.Idle;
 //		}
 //		else 
-		if (playerInAttackRange)
+
+		if (playerInSightRange && flee)
+		{
+			currentState = State.Fleeing;
+		}
+		else if (flee)
+		{
+			currentState = State.Wander;
+		}
+		else if (playerInAttackRange)
 		{
 			currentState = State.Attacking;
 		
@@ -166,6 +178,10 @@ public class EnemyScript : MonoBehaviour {
 		{
 			Wander();
 		}
+		if (currentState == State.Fleeing)
+		{
+			Flee(target);
+		}
 		if (currentState == State.Idle)
 		{
 
@@ -175,7 +191,47 @@ public class EnemyScript : MonoBehaviour {
 		transform.position = pos;
 
 	}
+	public void FleeTest(float health)
+	{
 
+		if (health <= CriticalHP)
+		{
+			int rand = Random.Range(0,2);
+			print (rand);
+			if (rand == 0)
+				SetFlee(true);
+		}
+	}
+	public void SetFlee(bool b)
+	{
+			flee = b;
+	}
+	void Flee(GameObject fleeTarget)
+	{
+		if (!overlappingEnemy)
+		{
+			if (moveAround())
+			{
+				
+			}
+			else
+			{
+				//			Vector3 vectorToTarget = target.transform.position - transform.position;
+				//			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+				//			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+				//			rigidbody2D.velocity = transform.up * 2;
+				//rigidbody2D.AddForce((target.transform.position.normalized - transform.position.normalized) * 10);
+				//rigidbody2D.velocity = (target.transform.position.normalized - transform.position.normalized) * 2;
+				
+				Vector3 vectorToTarget = target.transform.position - transform.position;
+				float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+				
+				transform.position = Vector3.MoveTowards(transform.position, -targetPos, speed/2);
+				
+			}
+		}
+	}
 	void attack(GameObject attackTarget)
 	{
 		Vector3 vectorToTarget = target.transform.position - transform.position;
