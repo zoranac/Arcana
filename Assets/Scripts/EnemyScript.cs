@@ -28,33 +28,41 @@ public class EnemyScript : MonoBehaviour {
 	public float speedMax = .025f; //ADDED
 	public float speedMin = .001f; //ADDED
 	public bool slowed = false; //ADDED
-	float speed = .02f;
+	public float speed = .02f;
 	public bool Ranged = false;
 	public float ShotInterval = 0;
-	float shotTime = 0;
+	public float shotTime = 0;
 	public GameObject RangedShotPrefab;
 	bool flee = false;
 	public float CriticalHP;
-	enum State
-	{
-		Idle,
-		Moving,
-		Wander,
-		Attacking,
-		Fleeing
-	}
+//	enum State
+//	{
+//		Idle,
+//		Moving,
+//		Wander,
+//		Attacking,
+//		Fleeing
+//	}
 
-	State currentState = State.Idle;
-	bool overlappingEnemy = false;
+	State_Seek Seek = new State_Seek();
+	State_Flee Flee = new State_Flee();
+	State_Attack Attack = new State_Attack();
+	State_Wander Wander = new State_Wander();
+	State_Idle Idle = new State_Idle();
+	public State currentState = State_Idle.Idle;
+	public bool overlappingEnemy = false;
+
 	// Use this for initialization
 	void Start () {
-
+		currentState = State_Idle.Idle;
+		currentState.EnterState(gameObject);
         layout = GameObject.Find("Health");
 
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () { //CHANGED
+
 		speed = Random.Range(speedMin,speedMax);
 		playerInSightRange = false;
 		playerInAttackRange = false;
@@ -143,49 +151,30 @@ public class EnemyScript : MonoBehaviour {
 
 		if (playerInSightRange && flee)
 		{
-			currentState = State.Fleeing;
+			currentState.ExitState(gameObject,State_Flee.Flee);
 		}
 		else if (flee)
 		{
-			currentState = State.Wander;
+			currentState.ExitState(gameObject,State_Wander.Wander);
 		}
 		else if (playerInAttackRange)
 		{
-			currentState = State.Attacking;
+			currentState.ExitState(gameObject,State_Attack.Attack);
 		
 		}
 		else if (playerInSightRange)
 		{
-			currentState = State.Moving;
+			currentState.ExitState(gameObject,State_Seek.Seek);
 			//transform.Rotate(Vector3.zero);
 		}
 		else
 		{
-			currentState = State.Wander;
+			currentState.ExitState(gameObject,State_Wander.Wander);
 			target = null;
 		}
 
-		if (currentState == State.Attacking)
-		{
-			attack(target);
-		}
-		
-		if (currentState == State.Moving)
-		{
-			move(target);
-		}
-		if (currentState == State.Wander)
-		{
-			Wander();
-		}
-		if (currentState == State.Fleeing)
-		{
-			Flee(target);
-		}
-		if (currentState == State.Idle)
-		{
+		currentState.RunState(gameObject);
 
-		}
 		Vector3 pos = transform.position;
 		pos.z = 0;
 		transform.position = pos;
@@ -206,100 +195,100 @@ public class EnemyScript : MonoBehaviour {
 	{
 			flee = b;
 	}
-	void Flee(GameObject fleeTarget)
-	{
-		if (!overlappingEnemy)
-		{
-			if (moveAround())
-			{
-				
-			}
-			else
-			{
-				//			Vector3 vectorToTarget = target.transform.position - transform.position;
-				//			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-				//			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-				//			rigidbody2D.velocity = transform.up * 2;
-				//rigidbody2D.AddForce((target.transform.position.normalized - transform.position.normalized) * 10);
-				//rigidbody2D.velocity = (target.transform.position.normalized - transform.position.normalized) * 2;
-				
-				Vector3 vectorToTarget = target.transform.position - transform.position;
-				float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-				
-				transform.position = Vector3.MoveTowards(transform.position, -targetPos, speed/2);
-				
-			}
-		}
-	}
-	void attack(GameObject attackTarget)
-	{
-		Vector3 vectorToTarget = target.transform.position - transform.position;
-		float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-		rigidbody2D.velocity = Vector2.zero;
-		if (!Ranged)
-		{
-      	  	target.gameObject.GetComponent<PlayerHealthScript>().Decriment(damage);
-        	layout.gameObject.GetComponent<HealthBarFlash>().FlashBar();
-		}
-		else
-		{
-			if (Time.time >= shotTime + ShotInterval)
-			{
-				GameObject temp = (GameObject)Instantiate(RangedShotPrefab,transform.position,transform.rotation);
-                //Setting Damage to a seperate public variable- shouldn't be the same as melee damage since melee damage is incurred much more frequently.
-				temp.GetComponent<EnemyShotScript>().SetDamage(rangeDamage);
-				shotTime = Time.time;
-			}
-		}
-	}
-	void move(GameObject moveTarget)
-	{
-		//rigidbody2D.velocity = Vector2.MoveTowards(transform.position,moveTarget.transform.position,100) * .5f;
-		if (!overlappingEnemy)
-		{
-			if (moveAround())
-			{
-
-			}
-			else
-			{
-	//			Vector3 vectorToTarget = target.transform.position - transform.position;
-	//			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-	//			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-	//			rigidbody2D.velocity = transform.up * 2;
-				//rigidbody2D.AddForce((target.transform.position.normalized - transform.position.normalized) * 10);
-				//rigidbody2D.velocity = (target.transform.position.normalized - transform.position.normalized) * 2;
-
-				Vector3 vectorToTarget = target.transform.position - transform.position;
-				float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-				transform.position = Vector3.MoveTowards(transform.position, targetPos, speed);
-
-			}
-		}
-	}
-	void Wander()
-	{
-		if (moveAround())
-		{
-			//transform.position = Vector3.MoveTowards(transform.position, targetPos, .03f);
-		}
-		else
-		{
-			//hit = false;
-			targetPos = targetPos.normalized;
-			targetPos.x = Random.Range(targetPos.x - .25f,targetPos.x + .25f);
-			targetPos.y = Random.Range(targetPos.y - .25f,targetPos.y + .25f);
-			targetPos *= 1000;
-			targetPos.z = -1;
-			
-			transform.position = Vector3.MoveTowards(transform.position, targetPos, speed*3);
-		}
-	}
-	bool moveAround()
+//	void Flee(GameObject fleeTarget)
+//	{
+//		if (!overlappingEnemy)
+//		{
+//			if (moveAround())
+//			{
+//				
+//			}
+//			else
+//			{
+//				//			Vector3 vectorToTarget = target.transform.position - transform.position;
+//				//			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+//				//			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//				//			rigidbody2D.velocity = transform.up * 2;
+//				//rigidbody2D.AddForce((target.transform.position.normalized - transform.position.normalized) * 10);
+//				//rigidbody2D.velocity = (target.transform.position.normalized - transform.position.normalized) * 2;
+//				
+//				Vector3 vectorToTarget = target.transform.position - transform.position;
+//				float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+//				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//				
+//				transform.position = Vector3.MoveTowards(transform.position, -targetPos, speed/2);
+//				
+//			}
+//		}
+//	}
+//	void attack(GameObject attackTarget)
+//	{
+//		Vector3 vectorToTarget = target.transform.position - transform.position;
+//		float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+//		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//		rigidbody2D.velocity = Vector2.zero;
+//		if (!Ranged)
+//		{
+//      	  	target.gameObject.GetComponent<PlayerHealthScript>().Decriment(damage);
+//        	layout.gameObject.GetComponent<HealthBarFlash>().FlashBar();
+//		}
+//		else
+//		{
+//			if (Time.time >= shotTime + ShotInterval)
+//			{
+//				GameObject temp = (GameObject)Instantiate(RangedShotPrefab,transform.position,transform.rotation);
+//                //Setting Damage to a seperate public variable- shouldn't be the same as melee damage since melee damage is incurred much more frequently.
+//				temp.GetComponent<EnemyShotScript>().SetDamage(rangeDamage);
+//				shotTime = Time.time;
+//			}
+//		}
+//	}
+//	void move(GameObject moveTarget)
+//	{
+//		//rigidbody2D.velocity = Vector2.MoveTowards(transform.position,moveTarget.transform.position,100) * .5f;
+//		if (!overlappingEnemy)
+//		{
+//			if (moveAround())
+//			{
+//
+//			}
+//			else
+//			{
+//	//			Vector3 vectorToTarget = target.transform.position - transform.position;
+//	//			float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+//	//			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//	//			rigidbody2D.velocity = transform.up * 2;
+//				//rigidbody2D.AddForce((target.transform.position.normalized - transform.position.normalized) * 10);
+//				//rigidbody2D.velocity = (target.transform.position.normalized - transform.position.normalized) * 2;
+//
+//				Vector3 vectorToTarget = target.transform.position - transform.position;
+//				float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+//				transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//
+//				transform.position = Vector3.MoveTowards(transform.position, targetPos, speed);
+//
+//			}
+//		}
+//	}
+//	void Wander()
+//	{
+//		if (moveAround())
+//		{
+//			//transform.position = Vector3.MoveTowards(transform.position, targetPos, .03f);
+//		}
+//		else
+//		{
+//			//hit = false;
+//			targetPos = targetPos.normalized;
+//			targetPos.x = Random.Range(targetPos.x - .25f,targetPos.x + .25f);
+//			targetPos.y = Random.Range(targetPos.y - .25f,targetPos.y + .25f);
+//			targetPos *= 1000;
+//			targetPos.z = -1;
+//			
+//			transform.position = Vector3.MoveTowards(transform.position, targetPos, speed*3);
+//		}
+//	}
+	public bool moveAround()
 	{
 
 		if (HitTop)
