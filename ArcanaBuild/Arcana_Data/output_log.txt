@@ -1,0 +1,41 @@
+Initialize engine version: 4.3.4f1 (e444f76e01cd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 660M   (ID=0xfd4)
+    Vendor:   NVIDIA
+    VRAM:     1994 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Ben\Desktop\Arcana\ArcanaBuild\Arcana_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Ben\Desktop\Arcana\ArcanaBuild\Arcana_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Ben\Desktop\Arcana\ArcanaBuild\Arcana_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Ben\Desktop\Arcana\ArcanaBuild\Arcana_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+- Completed reload, in  0.040 seconds
+desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Platform assembly: C:\Users\Ben\Desktop\Arcana\ArcanaBuild\Arcana_Data\Managed\System.Core.dll (this message is harmless)
+InControl (version 1.4.4 build 3778)
+ 
+(Filename: C:/BuildAgent/work/d3d49558e4d408f4/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 53)
+
+Platform assembly: C:\Users\Ben\Desktop\Arcana\ArcanaBuild\Arcana_Data\Managed\System.dll (this message is harmless)
+Start new game
+ 
+(Filename: C:/BuildAgent/work/d3d49558e4d408f4/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 53)
+
+UnloadTime: 0.977555 ms
+InControl (version 1.4.4 build 3778)
+ 
+(Filename: C:/BuildAgent/work/d3d49558e4d408f4/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 53)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 429.
+Total: 3.357728 ms (FindLiveObjects: 0.045756 ms CreateObjectMapping: 0.020098 ms MarkObjects: 0.382726 ms  DeleteObjects: 1.890967 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GlobalControl.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+

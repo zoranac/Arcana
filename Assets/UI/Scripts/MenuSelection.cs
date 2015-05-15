@@ -9,7 +9,7 @@ public class MenuSelection : MonoBehaviour {
 	public AudioClip clip2;
 	public AudioClip clip3;
 
-    GameObject names;
+    public GameObject names;
 
 	bool inSubMenu = false;
 	//public AnimationClip inClip;
@@ -20,12 +20,13 @@ public class MenuSelection : MonoBehaviour {
 	void Start () {
 		//anim = animationMaster.GetComponent<Animator> ();
         names = GameObject.Find("Names");
+        names.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//debug input
-        if (InputManager.ActiveDevice.LeftStick.Up.WasPressed || InputManager.ActiveDevice.DPadUp.WasPressed && !inSubMenu)
+        if (Input.GetKeyDown("up") || InputManager.ActiveDevice.LeftStick.Up.WasPressed || InputManager.ActiveDevice.DPadUp.WasPressed && !inSubMenu)
         {
             audio.PlayOneShot(clip);
 			menuIndex--;
@@ -35,7 +36,7 @@ public class MenuSelection : MonoBehaviour {
 		}
 
 		//debug input
-        if (InputManager.ActiveDevice.LeftStick.Down.WasPressed || InputManager.ActiveDevice.DPadDown.WasPressed && !inSubMenu)
+        if (Input.GetKeyDown("down") || InputManager.ActiveDevice.LeftStick.Down.WasPressed || InputManager.ActiveDevice.DPadDown.WasPressed && !inSubMenu)
         {
             audio.PlayOneShot(clip);
 			menuIndex++;
@@ -61,8 +62,8 @@ public class MenuSelection : MonoBehaviour {
 			GameObject.Find("New Game").GetComponent<Highlight>()._Highlight();
 			GameObject.Find("Options").GetComponent<Highlight>().Unhighlight();
 			GameObject.Find("Credits").GetComponent<Highlight>().Unhighlight();
-           // names.SetActive(false);
-            if (InputManager.ActiveDevice.Action1.WasPressed )
+            names.SetActive(false);
+            if (InputManager.ActiveDevice.Action1.WasPressed || Input.GetKeyDown("m"))
             {
 				//play sound effect
 				audio.PlayOneShot(clip2);
@@ -78,8 +79,8 @@ public class MenuSelection : MonoBehaviour {
 			GameObject.Find("New Game").GetComponent<Highlight>().Unhighlight();
 			GameObject.Find("Options").GetComponent<Highlight>()._Highlight();
 			GameObject.Find("Credits").GetComponent<Highlight>().Unhighlight();
-           // names.SetActive(false);
-            if (InputManager.ActiveDevice.Action1.WasPressed)
+            names.SetActive(false);
+            if (InputManager.ActiveDevice.Action1.WasPressed || Input.GetKeyDown("m"))
             {
 				//play sound effect
 				audio.PlayOneShot(clip2);
@@ -95,13 +96,13 @@ public class MenuSelection : MonoBehaviour {
 			GameObject.Find("New Game").GetComponent<Highlight>().Unhighlight();
 			GameObject.Find("Options").GetComponent<Highlight>().Unhighlight();
 			GameObject.Find("Credits").GetComponent<Highlight>()._Highlight();
-            if (InputManager.ActiveDevice.Action1.WasPressed)
+            if (InputManager.ActiveDevice.Action1.WasPressed || Input.GetKeyDown("m"))
             {
 				//play sound effect
 				audio.PlayOneShot(clip2);
 				//show credits
-                //names.SetActive(true);
-				//inSubMenu = true;
+                names.SetActive(true);
+				inSubMenu = true;
 			}
 			break;
 		
